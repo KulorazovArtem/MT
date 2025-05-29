@@ -32,7 +32,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
             button1 = new Button();
             button2 = new Button();
             button3 = new Button();
@@ -41,8 +40,6 @@
             button6 = new Button();
             button7 = new Button();
             button8 = new Button();
-            pictureBox1 = new PictureBox();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // button1
@@ -65,6 +62,7 @@
             button2.TabIndex = 1;
             button2.Text = "S";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // button3
             // 
@@ -120,23 +118,11 @@
             button8.Text = "K";
             button8.UseVisualStyleBackColor = true;
             // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(0, 0);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(80, 100);
-            pictureBox1.TabIndex = 2;
-            pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click;
-            // 
             // Form2
             // 
             AutoScaleMode = AutoScaleMode.None;
-            AutoSize = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ClientSize = new Size(644, 801);
-            Controls.Add(pictureBox1);
+            ClientSize = new Size(644, 799);
             Controls.Add(button8);
             Controls.Add(button4);
             Controls.Add(button7);
@@ -148,7 +134,6 @@
             Name = "Form2";
             Text = "Form2";
             Load += Form2_Load;
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -162,6 +147,5 @@
         private Button button6;
         private Button button7;
         private Button button8;
-        private PictureBox pictureBox1;
     }
 }
