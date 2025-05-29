@@ -1,0 +1,167 @@
+﻿namespace MT
+{
+    partial class Form2
+    {
+        private static int Form2Size0 = 800;
+        private static double coef = 1.2;
+        private static int Form2Size1 = (int)(Form2Size0 * coef);
+        private static int ButtonCount = 8;
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
+            button1 = new Button();
+            button2 = new Button();
+            button3 = new Button();
+            button4 = new Button();
+            button5 = new Button();
+            button6 = new Button();
+            button7 = new Button();
+            button8 = new Button();
+            pictureBox1 = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            SuspendLayout();
+            // 
+            // button1
+            // 
+            button1.BackColor = SystemColors.ControlLightLight;
+            button1.FlatAppearance.BorderColor = Color.White;
+            button1.Location = new Point(0, 700);
+            button1.Name = "button1";
+            button1.Size = new Size(80, 100);
+            button1.TabIndex = 0;
+            button1.Text = "A";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(80, 700);
+            button2.Name = "button2";
+            button2.Size = new Size(80, 100);
+            button2.TabIndex = 1;
+            button2.Text = "S";
+            button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(160, 700);
+            button3.Name = "button3";
+            button3.Size = new Size(80, 100);
+            button3.TabIndex = 0;
+            button3.Text = "D";
+            button3.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            button4.Location = new Point(240, 700);
+            button4.Name = "button4";
+            button4.Size = new Size(80, 100);
+            button4.TabIndex = 1;
+            button4.Text = "F";
+            button4.UseVisualStyleBackColor = true;
+            // 
+            // button5
+            // 
+            button5.Location = new Point(320, 700);
+            button5.Name = "button5";
+            button5.Size = new Size(80, 100);
+            button5.TabIndex = 0;
+            button5.Text = "G";
+            button5.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            button6.Location = new Point(400, 700);
+            button6.Name = "button6";
+            button6.Size = new Size(80, 100);
+            button6.TabIndex = 1;
+            button6.Text = "H";
+            button6.UseVisualStyleBackColor = true;
+            // 
+            // button7
+            // 
+            button7.Location = new Point(480, 700);
+            button7.Name = "button7";
+            button7.Size = new Size(80, 100);
+            button7.TabIndex = 0;
+            button7.Text = "J";
+            button7.UseVisualStyleBackColor = true;
+            // 
+            // button8
+            // 
+            button8.Location = new Point(560, 700);
+            button8.Name = "button8";
+            button8.Size = new Size(80, 100);
+            button8.TabIndex = 1;
+            button8.Text = "K";
+            button8.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(0, 0);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(80, 100);
+            pictureBox1.TabIndex = 2;
+            pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
+            // 
+            // Form2
+            // 
+            AutoScaleMode = AutoScaleMode.None;
+            AutoSize = true;
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            ClientSize = new Size(644, 801);
+            Controls.Add(pictureBox1);
+            Controls.Add(button8);
+            Controls.Add(button4);
+            Controls.Add(button7);
+            Controls.Add(button3);
+            Controls.Add(button6);
+            Controls.Add(button2);
+            Controls.Add(button5);
+            Controls.Add(button1);
+            Name = "Form2";
+            Text = "Form2";
+            Load += Form2_Load;
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ResumeLayout(false);
+        }
+
+        #endregion
+
+        private Button button1;
+        private Button button2;
+        private Button button3;
+        private Button button4;
+        private Button button5;
+        private Button button6;
+        private Button button7;
+        private Button button8;
+        private PictureBox pictureBox1;
+    }
+}
