@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.DataFormats;
 
 namespace MT
 {
@@ -34,6 +35,7 @@ namespace MT
 
         private List<PictureBox> pictureBoxes = new List<PictureBox>();
         private List<bool> pictureBoxesСlicked = new List<bool>();
+        private List<Button> button_all = new List<Button>();
         public Form2()
         {
             InitializeComponent();
@@ -45,13 +47,13 @@ namespace MT
                 int r1 = random.Next(0, TilesCount);
                 int r2 = random.Next(0, 8);
                 if (!spp.Contains(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 }))
-                { 
-                    sp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 }); 
-                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 }); 
-                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80 + 80, r2 * (-100) - 200 }); 
-                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80 - 80, r2 * (-100) - 200 }); 
-                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 + 100}); 
-                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 - 100}); 
+                {
+                    sp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 });
+                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 });
+                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80 + 80, r2 * (-100) - 200 });
+                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80 - 80, r2 * (-100) - 200 });
+                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 + 100 });
+                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 - 100 });
                 }
             }
 
@@ -167,6 +169,14 @@ namespace MT
             pictureBoxes.Add(pictureBox8);
             pictureBoxes.Add(pictureBox9);
             pictureBoxes.Add(pictureBox10);
+            button_all.Add(button1);
+            button_all.Add(button2);
+            button_all.Add(button3);
+            button_all.Add(button4);
+            button_all.Add(button5);
+            button_all.Add(button6);
+            button_all.Add(button7);
+            button_all.Add(button8);
             for (int i = 0; i < pictureBoxesСlicked.Count; i++)
             {
                 pictureBoxesСlicked[i] = false;
@@ -192,13 +202,13 @@ namespace MT
                 int r1 = random.Next(0, TilesCount);
                 int r2 = random.Next(0, 8);
                 if (!spp.Contains(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 }))
-                { 
-                    sp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 }); 
-                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 }); 
-                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80 + 80, r2 * (-100) - 200 }); 
-                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80 - 80, r2 * (-100) - 200 }); 
-                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 + 100}); 
-                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 - 100}); 
+                {
+                    sp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 });
+                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 });
+                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80 + 80, r2 * (-100) - 200 });
+                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80 - 80, r2 * (-100) - 200 });
+                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 + 100 });
+                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 - 100 });
                 }
             }
             for (int i = 0; i < pictureBoxes.Count; i++)
@@ -223,7 +233,7 @@ namespace MT
             //pictureBoxesСlicked[P.Location.X / 80] = true;
         }
 
-        
+
 
         private void Key_Down(object sender, KeyEventArgs e)
         {
@@ -260,6 +270,7 @@ namespace MT
             else if (e.KeyCode == Keys.K)
             {
                 X = 7;
+
             }
             X *= 80;
             int Lose = 0;
@@ -298,6 +309,33 @@ namespace MT
         private void button2_Click(object sender, EventArgs e)
         {
             timer.Start();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            timer.Stop();
+            for (int i = 0; i < pictureBoxes.Count; i++)
+            {
+                pictureBoxes[i].Visible = false;
+            }
+            for (int i = 0; i < button_all.Count; i++)
+            {
+                button_all[i].Visible = false;
+            }
+            label1.Visible = true;
+            label2.Visible = true;
+            button9.Visible = true;
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            
+            this.Close();
         }
     }
 }

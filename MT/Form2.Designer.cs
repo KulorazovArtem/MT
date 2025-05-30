@@ -40,6 +40,9 @@
             button6 = new Button();
             button7 = new Button();
             button8 = new Button();
+            label1 = new Label();
+            label2 = new Label();
+            button9 = new Button();
             SuspendLayout();
             // 
             // button1
@@ -117,12 +120,50 @@
             button8.TabIndex = 1;
             button8.Text = "K";
             button8.UseVisualStyleBackColor = true;
+            button8.Click += button8_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 28.2F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            label1.Location = new Point(180, 253);
+            label1.Name = "label1";
+            label1.Size = new Size(300, 62);
+            label1.TabIndex = 2;
+            label1.Text = "Ваши очки!!!";
+            label1.Visible = false;
+            label1.Click += label1_Click;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            label2.Location = new Point(272, 357);
+            label2.Name = "label2";
+            label2.Size = new Size(89, 54);
+            label2.TabIndex = 3;
+            label2.Text = "100";
+            label2.Visible = false;
+            // 
+            // button9
+            // 
+            button9.Location = new Point(160, 598);
+            button9.Name = "button9";
+            button9.Size = new Size(335, 77);
+            button9.TabIndex = 4;
+            button9.Text = "Main menu";
+            button9.UseVisualStyleBackColor = true;
+            button9.Visible = false;
+            button9.Click += button9_Click;
             // 
             // Form2
             // 
             AutoScaleMode = AutoScaleMode.None;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(644, 799);
+            Controls.Add(button9);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(button8);
             Controls.Add(button4);
             Controls.Add(button7);
@@ -131,10 +172,12 @@
             Controls.Add(button2);
             Controls.Add(button5);
             Controls.Add(button1);
+            Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 204);
             Name = "Form2";
             Text = "Form2";
             Load += Form2_Load;
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -147,5 +190,8 @@
         private Button button6;
         private Button button7;
         private Button button8;
+        private Label label1;
+        private Label label2;
+        private Button button9;
     }
 }
