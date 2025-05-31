@@ -242,35 +242,42 @@ namespace MT
             if (e.KeyCode == Keys.A)
             {
                 X = 0;
+                Console.Beep(5000, 25);
             }
             else if (e.KeyCode == Keys.S)
             {
                 X = 1;
+                Console.Beep(3500, 25);
             }
             else if (e.KeyCode == Keys.D)
             {
                 X = 2;
+                Console.Beep(3000, 25);
             }
             else if (e.KeyCode == Keys.F)
             {
                 X = 3;
+                Console.Beep(2500, 25);
             }
             else if (e.KeyCode == Keys.G)
             {
                 X = 4;
+                Console.Beep(2000, 25);
             }
             else if (e.KeyCode == Keys.H)
             {
                 X = 5;
+                Console.Beep(1500, 25);
             }
             else if (e.KeyCode == Keys.J)
             {
                 X = 6;
+                Console.Beep(1000, 25);
             }
             else if (e.KeyCode == Keys.K)
             {
                 X = 7;
-
+                Console.Beep(500, 25);
             }
             X *= 80;
             int Lose = 0;
@@ -330,6 +337,7 @@ namespace MT
             label1.Visible = true;
             label2.Visible = true;
             button9.Visible = true;
+            this.KeyPreview = false;
         }
 
         private void button9_Click(object sender, EventArgs e)
