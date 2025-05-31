@@ -23,37 +23,44 @@ namespace MT
         private PictureBox pictureBox6;
         private PictureBox pictureBox7;
         private PictureBox pictureBox8;
-        private PictureBox pictureBox9;
-        private PictureBox pictureBox10;
+        //private PictureBox pictureBox9;
+        //private PictureBox pictureBox10;
         //private PictureBox pictureBoxxx;
         private Random random = new Random();
 
         private System.Windows.Forms.Timer timer;
-        private int speed = 5;
+        private int speed = 2;
 
-        private static int TilesCount = 2;
+        private static int LinesCount = 8;
+        private static int TilesCount = 8;
+
+        private static int invisiblematrix0 = 6;
 
         private List<PictureBox> pictureBoxes = new List<PictureBox>();
         private List<bool> pictureBoxesСlicked = new List<bool>();
         private List<Button> button_all = new List<Button>();
+        private int[,] matrix = new int[invisiblematrix0 + 2, LinesCount + 2];
+
         public Form2()
         {
             InitializeComponent();
 
             List<List<int>> sp = new List<List<int>> { };
-            List<List<int>> spp = new List<List<int>> { };
-            while (sp.Count < 10)
+            int co = 0;
+            while (co < TilesCount)
             {
-                int r1 = random.Next(0, TilesCount);
-                int r2 = random.Next(0, 8);
-                if (!spp.Contains(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 }))
+                int r1 = random.Next(1, invisiblematrix0 + 1);
+                int r2 = random.Next(1, LinesCount + 1);
+                if (matrix[r1, r2] == 0)
                 {
-                    sp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 });
-                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 });
-                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80 + 80, r2 * (-100) - 200 });
-                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80 - 80, r2 * (-100) - 200 });
-                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 + 100 });
-                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 - 100 });
+                    matrix[r1, r2] = 1;
+                    matrix[r1 - 1, r2] = 2;
+                    matrix[r1 + 1, r2] = 2;
+                    matrix[r1, r2 - 1] = 2;
+                    matrix[r1, r2 + 1] = 2;
+                    co += 1;
+                    //MessageBox.Show(co.ToString());
+                    sp.Add(new List<int> { 80 * (int)((8 - LinesCount) / 2) + (r2 - 1) * 80, (invisiblematrix0 - r1 + 1) * (-100) - 200 });
                 }
             }
 
@@ -122,24 +129,24 @@ namespace MT
                 SizeMode = PictureBoxSizeMode.Zoom,
                 BackColor = Color.Black,
             };
-            pictureBox9 = new PictureBox
-            {
-                Size = new Size(80, 100),
-                Location = new Point(sp[8][0], sp[8][1]),
-                BorderStyle = BorderStyle.FixedSingle,
-                SizeMode = PictureBoxSizeMode.Zoom,
-                BackColor = Color.Black,
-                Visible = false
-            };
-            pictureBox10 = new PictureBox
-            {
-                Size = new Size(80, 100),
-                Location = new Point(sp[9][0], sp[9][1]),
-                BorderStyle = BorderStyle.FixedSingle,
-                SizeMode = PictureBoxSizeMode.Zoom,
-                BackColor = Color.Black,
-                Visible = false
-            };
+            //pictureBox9 = new PictureBox
+            //{
+            //    Size = new Size(80, 100),
+            //    Location = new Point(sp[8][0], sp[8][1]),
+            //    BorderStyle = BorderStyle.FixedSingle,
+            //    SizeMode = PictureBoxSizeMode.Zoom,
+            //    BackColor = Color.Black,
+            //    Visible = false
+            //};
+            //pictureBox10 = new PictureBox
+            //{
+            //    Size = new Size(80, 100),
+            //    Location = new Point(sp[9][0], sp[9][1]),
+            //    BorderStyle = BorderStyle.FixedSingle,
+            //    SizeMode = PictureBoxSizeMode.Zoom,
+            //    BackColor = Color.Black,
+            //    Visible = false
+            //};
             //pictureBoxxx = new PictureBox
             //{
             //    Size = new Size(80, 100),
@@ -149,6 +156,7 @@ namespace MT
             //    BackColor = Color.Black,
             //    Visible = false
             //};
+
             this.Controls.Add(pictureBox1);
             this.Controls.Add(pictureBox2);
             this.Controls.Add(pictureBox3);
@@ -157,8 +165,8 @@ namespace MT
             this.Controls.Add(pictureBox6);
             this.Controls.Add(pictureBox7);
             this.Controls.Add(pictureBox8);
-            this.Controls.Add(pictureBox9);
-            this.Controls.Add(pictureBox10);
+            //this.Controls.Add(pictureBox9);
+            //this.Controls.Add(pictureBox10);
             pictureBoxes.Add(pictureBox1);
             pictureBoxes.Add(pictureBox2);
             pictureBoxes.Add(pictureBox3);
@@ -167,8 +175,8 @@ namespace MT
             pictureBoxes.Add(pictureBox6);
             pictureBoxes.Add(pictureBox7);
             pictureBoxes.Add(pictureBox8);
-            pictureBoxes.Add(pictureBox9);
-            pictureBoxes.Add(pictureBox10);
+            //pictureBoxes.Add(pictureBox9);
+            //pictureBoxes.Add(pictureBox10);
             button_all.Add(button1);
             button_all.Add(button2);
             button_all.Add(button3);
@@ -183,46 +191,86 @@ namespace MT
             }
 
             timer = new System.Windows.Forms.Timer();
-            timer.Interval = 1; // Интервал в миллисекундах (20 раз в секунду)
+            timer.Interval = 10; // Интервал в миллисекундах (20 раз в секунду)
             timer.Tick += Timer_Tick1;
 
             this.KeyDown += new KeyEventHandler(Key_Down);
             this.KeyPreview = true;
         }
 
-
+        private int flag = 0;
         private void Timer_Tick1(object sender, EventArgs e)
         {
-            // Увеличиваем позицию Y (движение вниз)
-            //pictureBox1.Top += speed;
-            List<List<int>> sp = new List<List<int>> { };
-            List<List<int>> spp = new List<List<int>> { };
-            while (sp.Count < pictureBoxes.Count)
-            {
-                int r1 = random.Next(0, TilesCount);
-                int r2 = random.Next(0, 8);
-                if (!spp.Contains(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 }))
-                {
-                    sp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 });
-                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 });
-                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80 + 80, r2 * (-100) - 200 });
-                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80 - 80, r2 * (-100) - 200 });
-                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 + 100 });
-                    spp.Add(new List<int> { 80 * (int)((8 - TilesCount) / 2) + r1 * 80, r2 * (-100) - 200 - 100 });
-                }
-            }
+
+            flag += 1;
             for (int i = 0; i < pictureBoxes.Count; i++)
             {
                 pictureBoxes[i].Location = new Point(pictureBoxes[i].Location.X, pictureBoxes[i].Location.Y + speed);
             }
+            //if (pictureBoxes[0].Location.Y % 100 == 0)
+            //    MessageBox.Show(pictureBoxes[0].Location.Y.ToString());
             // Остановка при достижении нижней границы формы
 
-            for (int i = 0; i < pictureBoxes.Count; i++)
+            if (flag == 100 / speed)
             {
-                if (pictureBoxes[i].Location.Y >= 800)
+                //MessageBox.Show(pictureBoxes[0].Location.Y.ToString());
+                //label1.Text = pictureBoxes[0].Location.Y.ToString();
+                //label2.Text = flag.ToString();
+                flag = 0;
+                int co = 0;
+                for (int i = 0; i < pictureBoxes.Count; i++)
                 {
-                    pictureBoxes[i].Visible = true;
-                    pictureBoxes[i].Location = new Point(sp[i][0], sp[i][1]);
+                    if (pictureBoxes[i].Location.Y == 800)
+                    {
+                        co += 1;
+                    }
+                }
+
+                for (int i = matrix.GetLength(0) - 1; i >= 0; i--)
+                {
+                    if (i == 0)
+                    {
+                        for (int j = 0; j < matrix.GetLength(1); j++)
+                        {
+                            matrix[i, j] = 0;
+                        }
+                    }
+                    if (i >= 1)
+                    {
+                        for (int j = 0; j < matrix.GetLength(1); j++)
+                        {
+                            matrix[i, j] = matrix[i - 1, j];
+                        }
+                    }
+                }
+                var sp = new List<List<int>> { };
+
+                int coco = 0;
+                while (coco < co)
+                {
+                    int r1 = random.Next(1, invisiblematrix0 + 1);
+                    int r2 = random.Next(1, LinesCount + 1);
+                    if (matrix[r1, r2] == 0)
+                    {
+                        matrix[r1, r2] = 1;
+                        matrix[r1 - 1, r2] = 2;
+                        matrix[r1 + 1, r2] = 2;
+                        matrix[r1, r2 - 1] = 2;
+                        matrix[r1, r2 + 1] = 2;
+                        coco += 1;
+                        sp.Add(new List<int> { 80 * (int)((8 - LinesCount) / 2) + (r2 - 1) * 80, (invisiblematrix0 - r1 + 1) * (-100) - 200 });
+
+                    }
+                }
+                //MessageBox.Show("1");
+                for (int i = 0, k = 0; i < pictureBoxes.Count; i++)
+                {
+                    if (pictureBoxes[i].Location.Y == 800)
+                    {
+                        pictureBoxes[i].Visible = true;
+                        pictureBoxes[i].Location = new Point(sp[k][0], sp[k][1]);
+                        k++;
+                    }
                 }
             }
         }
