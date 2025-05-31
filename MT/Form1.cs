@@ -3,14 +3,16 @@ namespace MT
     public partial class Form1 : Form
     {
         private int count_tracks = 2;
+        
         private string FolderPath;
         private string FilePath;
 
+        public int CountTracks => count_tracks;
         public Form1()
         {
             InitializeComponent();
             comboBox1.SelectedIndex = 0;
-
+            
 
             Label cellLabel = new Label
             {
