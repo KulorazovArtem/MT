@@ -1,8 +1,12 @@
+using System.Net.WebSockets;
+using System.Xml.Linq;
+
 namespace MT
 {
     public partial class Form1 : Form
     {
         private int count_tracks = 2;
+        private int[] text;
         
         private string FolderPath;
         private string FilePath;
@@ -11,8 +15,18 @@ namespace MT
         public Form1()
         {
             InitializeComponent();
-            comboBox1.SelectedIndex = 0;
             
+            comboBox1.SelectedIndex = 0;
+            //var name_file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"top.{comboBox1.SelectedItem.ToString()}");
+            //if (File.Exists(name_file) == false)
+            //{
+            //    label1.Text = "ffff";
+            //    MessageBox.Show("jjjjj");
+            //}
+            //else
+            //{
+            //    label1.Text = "rrrrr";
+            //}
 
             Label cellLabel = new Label
             {
@@ -20,6 +34,8 @@ namespace MT
                 Dock = DockStyle.Fill
             };
             tableLayoutPanel1.Controls.Add(cellLabel, 0, 0);
+           
+
         }
 
 
@@ -30,16 +46,30 @@ namespace MT
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            comboBox1.SelectedIndex = 0;
-            string selectedText = comboBox1.SelectedItem.ToString();                
             
-            if(selectedText == "JSON")
+            string selectedText = comboBox1.SelectedItem.ToString();
+            var name_file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"top.{comboBox1.SelectedItem.ToString()}");
+            if (File.Exists(name_file) == false || text == null)
             {
+                tableLayoutPanel1.Visible = false;
+                label3.Location = new Point(145, 250);
+                label3.Text = "У вас нет результатов";
+            }
+           
+            int[] yy = new int[] { 12, 34, 6, 87, 40 };
+            if (selectedText == "JSON")
+            {
+                var rr = new JSON_SerializerList();
+                rr.Serialize("top", yy);
+                text = rr.Deserialize($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
                 
             }
             else // XML
             {
-
+                var rr = new XML_SerializerList();
+                rr.Serializer_top_10("top", yy);
+                text = rr.Deserialize($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
+                
             }
         }
         public void SelectFolder(string path)
