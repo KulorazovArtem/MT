@@ -15,14 +15,14 @@ namespace MT
 {
     public partial class Form2 : Form
     {
-        private PictureBox pictureBox1;
-        private PictureBox pictureBox2;
-        private PictureBox pictureBox3;
-        private PictureBox pictureBox4;
-        private PictureBox pictureBox5;
-        private PictureBox pictureBox6;
-        private PictureBox pictureBox7;
-        private PictureBox pictureBox8;
+        //private PictureBox pictureBox1;
+        //private PictureBox pictureBox2;
+        //private PictureBox pictureBox3;
+        //private PictureBox pictureBox4;
+        //private PictureBox pictureBox5;
+        //private PictureBox pictureBox6;
+        //private PictureBox pictureBox7;
+        //private PictureBox pictureBox8;
         //private PictureBox pictureBox9;
         //private PictureBox pictureBox10;
         //private PictureBox pictureBoxxx;
@@ -32,11 +32,13 @@ namespace MT
         private int speed = 2;
 
         private static int LinesCount = 8;
-        private static int TilesCount = 8;
+        //private static int LinesCount = CountTracks;
+        private static int TilesCount = (LinesCount * 2 + 4) + (1 + (int)(LinesCount / 5)) + (1 + (int)(LinesCount / 3.5)) + (1);
+        //private static int TilesCount = 20;
 
-        private static int invisiblematrix0 = 6;
+        private static int invisiblematrix0 = 16 + 5;
 
-        private List<PictureBox> pictureBoxes = new List<PictureBox>();
+        private List<Tile> Tiles = new List<Tile>();
         private List<bool> pictureBoxesСlicked = new List<bool>();
         private List<Button> button_all = new List<Button>();
         private int[,] matrix = new int[invisiblematrix0 + 2, LinesCount + 2];
@@ -49,86 +51,133 @@ namespace MT
             int co = 0;
             while (co < TilesCount)
             {
-                int r1 = random.Next(1, invisiblematrix0 + 1);
-                int r2 = random.Next(1, LinesCount + 1);
-                if (matrix[r1, r2] == 0)
+                if (TilesCount - co > 1)
                 {
-                    matrix[r1, r2] = 1;
-                    matrix[r1 - 1, r2] = 2;
-                    matrix[r1 + 1, r2] = 2;
-                    matrix[r1, r2 - 1] = 2;
-                    matrix[r1, r2 + 1] = 2;
-                    co += 1;
-                    //MessageBox.Show(co.ToString());
-                    sp.Add(new List<int> { 80 * (int)((8 - LinesCount) / 2) + (r2 - 1) * 80, (invisiblematrix0 - r1 + 1) * (-100) - 200 });
+                    int r1 = random.Next(1 + (5), invisiblematrix0 + 1);
+                    int r2 = random.Next(1, LinesCount + 1);
+                    if (matrix[r1, r2] == 0 && matrix[r1, r2] == 0 && matrix[r1, r2] == 0)
+                    {
+                        matrix[r1, r2] = 1;
+                        matrix[r1 - 1, r2] = 2;
+                        matrix[r1 + 1, r2] = 2;
+                        matrix[r1, r2 - 1] = 2;
+                        matrix[r1, r2 + 1] = 2;
+                        co += 1;
+                        //MessageBox.Show(co.ToString());
+                        sp.Add(new List<int> { 80 * (int)((8 - LinesCount) / 2) + (r2 - 1) * 80, (invisiblematrix0 - r1 + 1) * (-100) - 200 });
+                    }
+                }
+                else if (co == TilesCount - 1)
+                {
+                    int r1 = 1;
+                    int r2 = random.Next(1, LinesCount + 1);
+                    if (matrix[r1, r2 + 4] != 2)
+                    {
+                        matrix[r1, r2 - 1] = 2;
+                        matrix[r1, r2] = 1;
+                        matrix[r1, r2 + 1] = 1;
+                        matrix[r1, r2 + 2] = 1;
+                        matrix[r1, r2 + 3] = 1;
+                        matrix[r1, r2 + 4] = 1;
+                        matrix[r1, r2 + 5] = 2;
+                        for (int ii = 0; ii < 5; ii++)
+                        {
+                            for (int j = 0; j < matrix.GetLength(1); j++)
+                            {
+                                if (matrix[ii, j] == 0)
+                                {
+                                    matrix[ii, j] = 2;
+                                }
+                            }
+                        }
+                        co++;
+                        sp.Add(new List<int> { 80 * (int)((8 - LinesCount) / 2) + (r2 - 1) * 80, (invisiblematrix0 - r1 + 1) * (-100) - 200 });
+                    }
                 }
             }
+            int i = 0;
+            for (int j = 0; j < LinesCount * 2 + 4; i++, j++)
+            {
+                Tiles.Add(new Tile(sp[i][0], sp[i][1]));
+                this.Controls.Add(Tiles[i].Box);
+            }
+            for (int j = 0; j < 1 + (int)(LinesCount / 5); j++, i++)
+            {
+                Tiles.Add(new Tile2(sp[i][0], sp[i][1]));
+                this.Controls.Add(Tiles[i].Box);
+            }
+            for (int j = 0; j < 1 + (int)(LinesCount / 3.5); j++, i++)
+            {
+                Tiles.Add(new TileTrap(sp[i][0], sp[i][1]));
+                this.Controls.Add(Tiles[i].Box);
+            }
+            Tiles.Add(new TileLong(sp[i][0], sp[i][1], 5));
+            this.Controls.Add(Tiles[i].Box);
 
-
-            pictureBox1 = new PictureBox
-            {
-                Size = new Size(80, 100),
-                Location = new Point(sp[0][0], sp[0][1]),
-                BorderStyle = BorderStyle.FixedSingle,
-                SizeMode = PictureBoxSizeMode.Zoom,
-                BackColor = Color.Black,
-            };
-            pictureBox2 = new PictureBox
-            {
-                Size = new Size(80, 100),
-                Location = new Point(sp[1][0], sp[1][1]),
-                BorderStyle = BorderStyle.FixedSingle,
-                SizeMode = PictureBoxSizeMode.Zoom,
-                BackColor = Color.Black,
-            };
-            pictureBox3 = new PictureBox
-            {
-                Size = new Size(80, 100),
-                Location = new Point(sp[2][0], sp[2][1]),
-                BorderStyle = BorderStyle.FixedSingle,
-                SizeMode = PictureBoxSizeMode.Zoom,
-                BackColor = Color.Black,
-            };
-            pictureBox4 = new PictureBox
-            {
-                Size = new Size(80, 100),
-                Location = new Point(sp[3][0], sp[3][1]),
-                BorderStyle = BorderStyle.FixedSingle,
-                SizeMode = PictureBoxSizeMode.Zoom,
-                BackColor = Color.Black,
-            };
-            pictureBox5 = new PictureBox
-            {
-                Size = new Size(80, 100),
-                Location = new Point(sp[4][0], sp[4][1]),
-                BorderStyle = BorderStyle.FixedSingle,
-                SizeMode = PictureBoxSizeMode.Zoom,
-                BackColor = Color.Black,
-            };
-            pictureBox6 = new PictureBox
-            {
-                Size = new Size(80, 100),
-                Location = new Point(sp[5][0], sp[5][1]),
-                BorderStyle = BorderStyle.FixedSingle,
-                SizeMode = PictureBoxSizeMode.Zoom,
-                BackColor = Color.Black,
-            };
-            pictureBox7 = new PictureBox
-            {
-                Size = new Size(80, 100),
-                Location = new Point(sp[6][0], sp[6][1]),
-                BorderStyle = BorderStyle.FixedSingle,
-                SizeMode = PictureBoxSizeMode.Zoom,
-                BackColor = Color.Black,
-            };
-            pictureBox8 = new PictureBox
-            {
-                Size = new Size(80, 100),
-                Location = new Point(sp[7][0], sp[7][1]),
-                BorderStyle = BorderStyle.FixedSingle,
-                SizeMode = PictureBoxSizeMode.Zoom,
-                BackColor = Color.Black,
-            };
+            //pictureBox1 = new PictureBox
+            //{
+            //    Size = new Size(80, 100),
+            //    Location = new Point(sp[0][0], sp[0][1]),
+            //    BorderStyle = BorderStyle.FixedSingle,
+            //    SizeMode = PictureBoxSizeMode.Zoom,
+            //    BackColor = Color.Black,
+            //};
+            //pictureBox2 = new PictureBox
+            //{
+            //    Size = new Size(80, 100),
+            //    Location = new Point(sp[1][0], sp[1][1]),
+            //    BorderStyle = BorderStyle.FixedSingle,
+            //    SizeMode = PictureBoxSizeMode.Zoom,
+            //    BackColor = Color.Black,
+            //};
+            //pictureBox3 = new PictureBox
+            //{
+            //    Size = new Size(80, 100),
+            //    Location = new Point(sp[2][0], sp[2][1]),
+            //    BorderStyle = BorderStyle.FixedSingle,
+            //    SizeMode = PictureBoxSizeMode.Zoom,
+            //    BackColor = Color.Black,
+            //};
+            //pictureBox4 = new PictureBox
+            //{
+            //    Size = new Size(80, 100),
+            //    Location = new Point(sp[3][0], sp[3][1]),
+            //    BorderStyle = BorderStyle.FixedSingle,
+            //    SizeMode = PictureBoxSizeMode.Zoom,
+            //    BackColor = Color.Black,
+            //};
+            //pictureBox5 = new PictureBox
+            //{
+            //    Size = new Size(80, 100),
+            //    Location = new Point(sp[4][0], sp[4][1]),
+            //    BorderStyle = BorderStyle.FixedSingle,
+            //    SizeMode = PictureBoxSizeMode.Zoom,
+            //    BackColor = Color.Black,
+            //};
+            //pictureBox6 = new PictureBox
+            //{
+            //    Size = new Size(80, 100),
+            //    Location = new Point(sp[5][0], sp[5][1]),
+            //    BorderStyle = BorderStyle.FixedSingle,
+            //    SizeMode = PictureBoxSizeMode.Zoom,
+            //    BackColor = Color.Black,
+            //};
+            //pictureBox7 = new PictureBox
+            //{
+            //    Size = new Size(80, 100),
+            //    Location = new Point(sp[6][0], sp[6][1]),
+            //    BorderStyle = BorderStyle.FixedSingle,
+            //    SizeMode = PictureBoxSizeMode.Zoom,
+            //    BackColor = Color.Black,
+            //};
+            //pictureBox8 = new PictureBox
+            //{
+            //    Size = new Size(80, 100),
+            //    Location = new Point(sp[7][0], sp[7][1]),
+            //    BorderStyle = BorderStyle.FixedSingle,
+            //    SizeMode = PictureBoxSizeMode.Zoom,
+            //    BackColor = Color.Black,
+            //};
             //pictureBox9 = new PictureBox
             //{
             //    Size = new Size(80, 100),
@@ -157,24 +206,24 @@ namespace MT
             //    Visible = false
             //};
 
-            this.Controls.Add(pictureBox1);
-            this.Controls.Add(pictureBox2);
-            this.Controls.Add(pictureBox3);
-            this.Controls.Add(pictureBox4);
-            this.Controls.Add(pictureBox5);
-            this.Controls.Add(pictureBox6);
-            this.Controls.Add(pictureBox7);
-            this.Controls.Add(pictureBox8);
+            //this.Controls.Add(pictureBox1);
+            //this.Controls.Add(pictureBox2);
+            //this.Controls.Add(pictureBox3);
+            //this.Controls.Add(pictureBox4);
+            //this.Controls.Add(pictureBox5);
+            //this.Controls.Add(pictureBox6);
+            //this.Controls.Add(pictureBox7);
+            //this.Controls.Add(pictureBox8);
             //this.Controls.Add(pictureBox9);
             //this.Controls.Add(pictureBox10);
-            pictureBoxes.Add(pictureBox1);
-            pictureBoxes.Add(pictureBox2);
-            pictureBoxes.Add(pictureBox3);
-            pictureBoxes.Add(pictureBox4);
-            pictureBoxes.Add(pictureBox5);
-            pictureBoxes.Add(pictureBox6);
-            pictureBoxes.Add(pictureBox7);
-            pictureBoxes.Add(pictureBox8);
+            //pictureBoxes.Add(pictureBox1);
+            //pictureBoxes.Add(pictureBox2);
+            //pictureBoxes.Add(pictureBox3);
+            //pictureBoxes.Add(pictureBox4);
+            //pictureBoxes.Add(pictureBox5);
+            //pictureBoxes.Add(pictureBox6);
+            //pictureBoxes.Add(pictureBox7);
+            //pictureBoxes.Add(pictureBox8);
             //pictureBoxes.Add(pictureBox9);
             //pictureBoxes.Add(pictureBox10);
             button_all.Add(button1);
@@ -185,10 +234,6 @@ namespace MT
             button_all.Add(button6);
             button_all.Add(button7);
             button_all.Add(button8);
-            for (int i = 0; i < pictureBoxesСlicked.Count; i++)
-            {
-                pictureBoxesСlicked[i] = false;
-            }
 
             timer = new System.Windows.Forms.Timer();
             timer.Interval = 10; // Интервал в миллисекундах (20 раз в секунду)
@@ -203,10 +248,11 @@ namespace MT
         {
 
             flag += 1;
-            for (int i = 0; i < pictureBoxes.Count; i++)
+            for (int i = 0; i < Tiles.Count; i++)
             {
-                pictureBoxes[i].Location = new Point(pictureBoxes[i].Location.X, pictureBoxes[i].Location.Y + speed);
+                Tiles[i].Box.Location = new Point(Tiles[i].Box.Location.X, Tiles[i].Box.Location.Y + speed);
             }
+
             //if (pictureBoxes[0].Location.Y % 100 == 0)
             //    MessageBox.Show(pictureBoxes[0].Location.Y.ToString());
             // Остановка при достижении нижней границы формы
@@ -218,28 +264,35 @@ namespace MT
                 //label2.Text = flag.ToString();
                 flag = 0;
                 int co = 0;
-                for (int i = 0; i < pictureBoxes.Count; i++)
+                int l = 0;
+                List<Tile> spTiles = new List<Tile>();
+                for (int ii = 0; ii < Tiles.Count; ii++)
                 {
-                    if (pictureBoxes[i].Location.Y == 800)
+                    if (Tiles[ii].Box.Location.Y == 800)
                     {
+                        spTiles.Add(Tiles[ii]);
                         co += 1;
+                        if (Tiles[ii].Box.Size.Height == 5 * 100)
+                        {
+                            l += 1;
+                        }
                     }
                 }
 
-                for (int i = matrix.GetLength(0) - 1; i >= 0; i--)
+                for (int ii = matrix.GetLength(0) - 1; ii >= 0; ii--)
                 {
-                    if (i == 0)
+                    if (ii == 0)
                     {
                         for (int j = 0; j < matrix.GetLength(1); j++)
                         {
-                            matrix[i, j] = 0;
+                            matrix[ii, j] = 0;
                         }
                     }
-                    if (i >= 1)
+                    if (ii >= 1)
                     {
                         for (int j = 0; j < matrix.GetLength(1); j++)
                         {
-                            matrix[i, j] = matrix[i - 1, j];
+                            matrix[ii, j] = matrix[ii - 1, j];
                         }
                     }
                 }
@@ -248,30 +301,89 @@ namespace MT
                 int coco = 0;
                 while (coco < co)
                 {
-                    int r1 = random.Next(1, invisiblematrix0 + 1);
-                    int r2 = random.Next(1, LinesCount + 1);
-                    if (matrix[r1, r2] == 0)
+                    if (TilesCount - coco > 1)
                     {
-                        matrix[r1, r2] = 1;
-                        matrix[r1 - 1, r2] = 2;
-                        matrix[r1 + 1, r2] = 2;
-                        matrix[r1, r2 - 1] = 2;
-                        matrix[r1, r2 + 1] = 2;
-                        coco += 1;
-                        sp.Add(new List<int> { 80 * (int)((8 - LinesCount) / 2) + (r2 - 1) * 80, (invisiblematrix0 - r1 + 1) * (-100) - 200 });
-
+                        int r1 = random.Next(1 + (5), invisiblematrix0 + 1);
+                        int r2 = random.Next(1, LinesCount + 1);
+                        if (matrix[r1, r2] == 0 && matrix[r1, r2] == 0 && matrix[r1, r2] == 0)
+                        {
+                            matrix[r1, r2] = 1;
+                            matrix[r1 - 1, r2] = 2;
+                            matrix[r1 + 1, r2] = 2;
+                            matrix[r1, r2 - 1] = 2;
+                            matrix[r1, r2 + 1] = 2;
+                            coco += 1;
+                            //MessageBox.Show(co.ToString());
+                            sp.Add(new List<int> { 80 * (int)((8 - LinesCount) / 2) + (r2 - 1) * 80, (invisiblematrix0 - r1 + 1) * (-100) - 200 });
+                        }
+                    }
+                    else if (coco == TilesCount - 1 && l >= 1)
+                    {
+                        int r1 = 1;
+                        int r2 = random.Next(1, LinesCount + 1);
+                        if (matrix[r1, r2 + 4] != 2)
+                        {
+                            matrix[r1, r2 - 1] = 2;
+                            matrix[r1, r2] = 1;
+                            matrix[r1, r2 + 1] = 1;
+                            matrix[r1, r2 + 2] = 1;
+                            matrix[r1, r2 + 3] = 1;
+                            matrix[r1, r2 + 4] = 1;
+                            matrix[r1, r2 + 5] = 2;
+                            for (int ii = 0; ii < 5; ii++)
+                            {
+                                for (int j = 0; j < matrix.GetLength(1); j++)
+                                {
+                                    if (matrix[ii, j] == 0)
+                                    {
+                                        matrix[ii, j] = 2;
+                                    }
+                                }
+                            }
+                            coco++;
+                            sp.Add(new List<int> { 80 * (int)((8 - LinesCount) / 2) + (r2 - 1) * 80, (invisiblematrix0 - r1 + 1) * (-100) - 200 });
+                        }
                     }
                 }
-                //MessageBox.Show("1");
-                for (int i = 0, k = 0; i < pictureBoxes.Count; i++)
+                for (int ii = 0, j = 0; ii < spTiles.Count; ii++, j++)
                 {
-                    if (pictureBoxes[i].Location.Y == 800)
+                    if (spTiles[ii] is TileLong)
                     {
-                        pictureBoxes[i].Visible = true;
-                        pictureBoxes[i].Location = new Point(sp[k][0], sp[k][1]);
-                        k++;
+                        spTiles[ii].Box.Location = new Point(sp[spTiles.Count - 1][0], sp[spTiles.Count - 1][1]);
+                    }
+                    else
+                    {
+                        spTiles[ii].Box.Location = new Point(sp[j][0], sp[][1]);
                     }
                 }
+                //int i = 0;
+                //for (int j = 0; j < LinesCount * 2 + 4; i++, j++)
+                //{
+                //    Tiles.Add(new Tile(sp[i][0], sp[i][1]));
+                //    this.Controls.Add(Tiles[i].Box);
+                //}
+                //for (int j = 0; j < 1 + (int)(LinesCount / 5); j++, i++)
+                //{
+                //    Tiles.Add(new Tile2(sp[i][0], sp[i][1]));
+                //    this.Controls.Add(Tiles[i].Box);
+                //}
+                //for (int j = 0; j < 1 + (int)(LinesCount / 3.5); j++, i++)
+                //{
+                //    Tiles.Add(new TileTrap(sp[i][0], sp[i][1]));
+                //    this.Controls.Add(Tiles[i].Box);
+                //}
+                //Tiles.Add(new TileLong(sp[i][0], sp[i][1], 5));
+                //this.Controls.Add(Tiles[i].Box);
+                ////MessageBox.Show("1");
+                //for (int i = 0, k = 0; i < Tiles.Count; i++)
+                //{
+                //    if (Tiles[i].Box.Location.Y == 800)
+                //    {
+                //        Tiles[i].Box.Visible = true;
+                //        Tiles[i].Box.Location = new Point(sp[k][0], sp[k][1]);
+                //        k++;
+                //    }
+                //}
             }
         }
 
@@ -329,15 +441,15 @@ namespace MT
             }
             X *= 80;
             int Lose = 0;
-            for (int i = 0; i < pictureBoxes.Count; i++)
+            for (int i = 0; i < Tiles.Count; i++)
             {
-                if (pictureBoxes[i].Location.X == X)
+                if (Tiles[i].Box.Location.X == X)
                 {
                     //MessageBox.Show("222");
-                    if (pictureBoxes[i].Location.Y >= 500 && pictureBoxes[i].Location.Y < 800)
+                    if (Tiles[i].Box.Location.Y >= 500 && Tiles[i].Box.Location.Y < 800)
                     {
                         //MessageBox.Show("333");
-                        pictureBoxes[i].Visible = false;
+                        Tiles[i].Box.Visible = false;
                         //Click(pictureBoxes[i]);
                         break;
                     }
@@ -374,9 +486,9 @@ namespace MT
         private void button8_Click(object sender, EventArgs e)
         {
             timer.Stop();
-            for (int i = 0; i < pictureBoxes.Count; i++)
+            for (int i = 0; i < Tiles.Count; i++)
             {
-                pictureBoxes[i].Visible = false;
+                Tiles[i].Box.Visible = false;
             }
             for (int i = 0; i < button_all.Count; i++)
             {
