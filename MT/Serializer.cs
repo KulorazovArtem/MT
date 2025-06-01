@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 using Newtonsoft.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MT
 {
@@ -15,15 +16,7 @@ namespace MT
         public string FolderPath { get; private set; }
         public string FilePath { get; private set; }
         public abstract string Extension { get; }
-        //public void SelectFolder(string path)
-        //{
-        //    if (path == null) return;
-        //    if (Directory.Exists(path) == false)
-        //    {
-        //        Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
-        //    }
-        //    FolderPath = path;
-        //}
+       
         public void SelectFile(string name)
         {
             var name_file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"{name}.{Extension}");
@@ -56,10 +49,28 @@ namespace MT
             int[] top_top = top.Top_10;
             return top_top;
         }
-        public void Serializer_top_10(string fileName, int[] top_10)
+        public void Serializer_top_10(string fileName, int top_1)
         {
             SelectFile(fileName);
-            Top top = new Top(top_10);
+            int[] text = Deserialize(fileName);
+            Array.Resize(ref text, text.Length + 1);
+            text[text.Length - 1] = top_1;
+            int[] new_top = text;
+
+            for (int j = 0; j < new_top.Length; j++)
+            {
+                for (int i = 0; i < new_top.Length - 1; i++)
+                {
+                    if (new_top[i] < new_top[i + 1])
+                    {
+                        int x = new_top[i];
+                        new_top[i] = new_top[i + 1];
+                        new_top[i + 1] = x;
+                    }
+                }
+            }
+            new_top = new_top.Take(10).ToArray();
+            Top top = new Top(new_top);
             XmlSerializer xml_ser = new XmlSerializer(typeof(Top));
             using (StreamWriter writ = new StreamWriter(FilePath)) 
             {
@@ -94,14 +105,35 @@ namespace MT
             int[] top_top = top.Top_10;
             return top_top;
         }
-        public void Serialize(string fileName, int[] top_10) 
+        
+        public void Serialize(string fileName, int top_1)
         {
             SelectFile(fileName);
+            int[] text = Deserialize($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
+            Array.Resize(ref text, text.Length + 1);
+            text[text.Length - 1] = top_1;
+            int[] new_top = text;
+            
+            for(int j = 0; j < new_top.Length; j++)
+            {
+                for(int i = 0; i < new_top.Length - 1; i++)
+                {
+                    if (new_top[i] < new_top[i + 1])
+                    {
+                        int x = new_top[i];
+                        new_top[i] = new_top[i + 1];
+                        new_top[i + 1] = x;
+                    }
+                }
+            }
+            new_top = new_top.Take(10).ToArray();
             Top top = new Top
             {
-                Top_10 = top_10
+                Top_10 = new_top
+
             };
             string js = System.Text.Json.JsonSerializer.Serialize(top);
+
             File.WriteAllText(FilePath, js);
         }
         private class Top
