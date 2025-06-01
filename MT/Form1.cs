@@ -67,7 +67,8 @@ namespace MT
                     Label cellLabel = new Label
                     {
                         Text = text[i].ToString(),
-                        Dock = DockStyle.Fill
+                        Dock = DockStyle.Fill,
+                        TextAlign = ContentAlignment.MiddleCenter
                     };
 
                     tableLayoutPanel1.Controls.Add(cellLabel, 0, i);
