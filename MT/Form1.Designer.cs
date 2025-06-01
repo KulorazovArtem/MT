@@ -40,12 +40,13 @@
             // 
             // button1
             // 
+            button1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             button1.Location = new Point(154, 696);
             button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
             button1.Size = new Size(337, 58);
             button1.TabIndex = 0;
-            button1.Text = "GO";
+            button1.Text = "Начать игру";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
