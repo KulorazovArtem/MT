@@ -32,7 +32,7 @@ namespace MT
         private System.Windows.Forms.Timer timer;
         private int speed = 100;
 
-        private static int LinesCount = 8;
+        private static int LinesCount = 2;
         //private static int LinesCount = Form.CountTracks;
         private static int TilesCount = (LinesCount * 2 + 4) + (1 + (int)(LinesCount / 5)) + (1 + (int)(LinesCount / 3.5)) + (1);
         //private static int TilesCount = 20;
@@ -43,11 +43,16 @@ namespace MT
         private List<bool> pictureBoxesСlicked = new List<bool>();
         private List<Button> button_all = new List<Button>();
         private int[,] matrix = new int[invisiblematrix0 + 2, LinesCount + 2];
+        private int TotalScore = 0;
+
+        private JSON_SerializerList serializerJ = new JSON_SerializerList();
+
 
         public Form2(Form1 f)
         {
             InitializeComponent();
             //LinesCount = f.CountTracks;
+            label3.Text = TotalScore.ToString();
             List<List<int>> sp = new List<List<int>> { };
             int co = 0;
 
@@ -125,7 +130,7 @@ namespace MT
             int i = 0;
             for (int j = 0; j < LinesCount * 2 + 4; i++, j++)
             {
-                Tiles.Add(new Tile(sp[i][0], sp[i][1]));
+                Tiles.Add(new TileBase(sp[i][0], sp[i][1]));
                 this.Controls.Add(Tiles[i].Box);
             }
             for (int j = 0; j < 1 + (int)(LinesCount / 5); j++, i++)
@@ -299,14 +304,21 @@ namespace MT
             speed = 1;
 
             this.KeyDown += new KeyEventHandler(Key_Down);
+            this.KeyUp += new KeyEventHandler(Key_Up);
             this.KeyPreview = true;
         }
 
         private int flag = 0;
         private int timerflag = 0;
+
+
+        private void FormClosing(object sender, FormClosedEventArgs e)
+        {
+            serializerJ.Serialize("top", TotalScore);
+        }
         private void Timer_Tick1(object sender, EventArgs e)
         {
-            label3.Text = $"{timer.Interval}\n{speed}";
+            //label3.Text = $"{timer.Interval}\n{speed}";
             flag += 1;
             for (int i = 0; i < Tiles.Count; i++)
             {
@@ -345,13 +357,26 @@ namespace MT
                 Tile Lt = null;
                 for (int ii = 0; ii < Tiles.Count; ii++)
                 {
-                    if (Tiles[ii].Box.Location.Y >= 800 && !(Tiles[ii] is TileLong))
+                    if (Tiles[ii].Box.Location.Y >= 700 && !(Tiles[ii] is TileLong))
                     {
+                        if (!Tiles[ii].Clicked && !(Tiles[ii] is TileTrap))
+                        {
+                            GameOver();
+                        }
+                        if (Tiles[ii] is TileTrap)
+                        {
+                            TotalScore += 2 * LinesCount;
+                            label3.Text = TotalScore.ToString();
+                        }
                         spTiles.Add(Tiles[ii]);
                         co += 1;
                     }
-                    if (Tiles[ii] is TileLong && Tiles[ii].Box.Location.Y >= 800)
+                    if (Tiles[ii] is TileLong && Tiles[ii].Box.Location.Y >= 700)
                     {
+                        if (!Tiles[ii].Clicked)
+                        {
+                            GameOver();
+                        }
                         Lt = (TileLong)Tiles[ii];
                     }
                 }
@@ -427,6 +452,7 @@ namespace MT
                 for (int ii = 0; ii < spTiles.Count; ii++)
                 {
                     spTiles[ii].Box.Visible = true;
+                    spTiles[ii].NotClicked();
                     spTiles[ii].Box.Location = new Point(sp[ii][0], sp[ii][1]);
                 }
             }
@@ -467,9 +493,12 @@ namespace MT
         }
 
 
+        private int LongTileDown = 0;
+        private bool LongTileD = false;
 
         private void Key_Down(object sender, KeyEventArgs e)
         {
+            if (LongTileD) return;
             //MessageBox.Show("111");
             int X = 0;
             if (e.KeyCode == Keys.A)
@@ -516,18 +545,128 @@ namespace MT
             int Lose = 0;
             for (int i = 0; i < Tiles.Count; i++)
             {
-                if (Tiles[i].Box.Location.X == X)
+                if (Tiles[i].Box.Location.X == X && (Tiles[i].Clicked == false))
                 {
                     //MessageBox.Show("222");
-                    if (Tiles[i].Box.Location.Y >= 500 && Tiles[i].Box.Location.Y < 800)
+                    if (Tiles[i].Box.Location.Y >= 500 && Tiles[i].Box.Location.Y < 700 && !(Tiles[i] is TileLong))
                     {
                         //MessageBox.Show("333");
-                        Tiles[i].Box.Visible = false;
-                        //Click(pictureBoxes[i]);
+                        if (Tiles[i] is TileBase)
+                        {
+                            TotalScore += 1 * LinesCount; 
+                            Tiles[i].Click();
+                            Lose++;
+                        }
+                        else if (Tiles[i] is Tile2)
+                        {
+                            TotalScore += 1 * LinesCount;
+                            Tiles[i].Click();
+                            Lose++;
+                        }
+                        else if (Tiles[i] is TileTrap)
+                        {
+                            GameOver();
+                        }
+                    }
+                    else if (Tiles[i].Box.Location.Y >= 100 && Tiles[i].Box.Location.Y < 700 && (Tiles[i] is TileLong))
+                    {
+                        LongTileD = true;
+                        LongTileDown = Tiles[i].Box.Location.Y;
+                        Lose++;
                         break;
                     }
                 }
             }
+            if (Lose == 0)
+            {
+                GameOver();
+            }
+            label3.Text = TotalScore.ToString();
+        }
+        private void Key_Up(object sender, KeyEventArgs e)
+        {
+            if (LongTileD == true) LongTileD = true;
+            //MessageBox.Show("111");
+            int X = 0;
+            if (e.KeyCode == Keys.A)
+            {
+                X = 0;
+            }
+            else if (e.KeyCode == Keys.S)
+            {
+                X = 1;
+            }
+            else if (e.KeyCode == Keys.D)
+            {
+                X = 2;
+            }
+            else if (e.KeyCode == Keys.F)
+            {
+                X = 3;
+            }
+            else if (e.KeyCode == Keys.G)
+            {
+                X = 4;
+            }
+            else if (e.KeyCode == Keys.H)
+            {
+                X = 5;
+            }
+            else if (e.KeyCode == Keys.J)
+            {
+                X = 6;
+            }
+            else if (e.KeyCode == Keys.K)
+            {
+                X = 7;
+            }
+            X *= 80;
+            int Lose = 0;
+            for (int i = 0; i < Tiles.Count; i++)
+            {
+                if (Tiles[i].Box.Location.X == X)
+                {
+                    if (Tiles[i].Box.Location.Y >= 100 && Tiles[i].Box.Location.Y < 800 && (Tiles[i] is TileLong))
+                    {
+                        LongTileDown = Tiles[i].Box.Location.Y - LongTileDown;
+                        if (LongTileDown >= 300)
+                        {
+                            TotalScore += 3 * LinesCount;
+                            label3.Text = TotalScore.ToString();
+                            Tiles[i].Click();
+                        }
+                        else if (LongTileDown >= 100 && LongTileDown < 300)
+                        {
+                            TotalScore += 2 * LinesCount;
+                            label3.Text = TotalScore.ToString();
+                            Tiles[i].Click();
+                        }
+                        else
+                        {
+                            TotalScore += 1 * LinesCount;
+                            label3.Text = TotalScore.ToString();
+                            Tiles[i].Click();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void GameOver()
+        {
+            timer.Stop();
+            for (int i = 0; i < Tiles.Count; i++)
+            {
+                Tiles[i].Box.Visible = false;
+            }
+            for (int i = 0; i < button_all.Count; i++)
+            {
+                button_all[i].Visible = false;
+            }
+            label1.Visible = true;
+            label2.Visible = true;
+            button9.Visible = true;
+            this.KeyPreview = false;
         }
 
         private void Form2_Load(object sender, EventArgs e)

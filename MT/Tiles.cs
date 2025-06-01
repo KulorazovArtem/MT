@@ -10,6 +10,7 @@ namespace MT
     {
         protected PictureBox _Box;
         protected bool _Сlicked = false;
+        public bool Clicked => _Сlicked;
         public Tile(int x, int y)
         {
             _Box = new PictureBox
@@ -22,7 +23,24 @@ namespace MT
             };
         }
         public PictureBox Box { get { return _Box; } }
-        public void Click()
+        public virtual void Click() { }
+        public void NotClicked() 
+        {
+            _Сlicked = false;
+        }
+        //public void Move(int x, int y)
+        //{
+        //    Box.Visible = true;
+        //    Box.Location = new Point(x, y);
+        //}
+    }
+    public class TileBase : Tile
+    {
+        public TileBase(int x, int y) : base(x, y)
+        {
+
+        }
+        public override void Click()
         {
             _Box.Visible = false;
             _Сlicked = true;
@@ -40,12 +58,14 @@ namespace MT
             _Box.BackColor = Color.Pink;
         }
         private int ClickCount = 2;
-        public void Click()
+        public override void Click()
         {
-            ClickCount--;
+            ClickCount -= 1;
+            _Box.Visible = true;
             if (ClickCount == 0)
             {
                 _Сlicked = true;
+                _Box.Visible = false;
             }
         }
     }
@@ -56,7 +76,7 @@ namespace MT
             _Сlicked = true;
             _Box.BackColor = Color.Green;
         }
-        public void Click()
+        public override void Click()
         {
             _Сlicked = false;
         }
@@ -68,9 +88,10 @@ namespace MT
             _Box.BackColor = Color.Blue;
             _Box.Size = new Size(_Box.Size.Width, _Box.Size.Height * l);
         }
-        public void Click()
+        public override void Click()
         {
             _Сlicked = true;
+            _Box.Visible = false;
         }
     }
 }
