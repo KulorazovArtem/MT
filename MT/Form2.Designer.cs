@@ -130,7 +130,7 @@
             label1.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 204);
             label1.Location = new Point(215, 256);
             label1.Name = "label1";
-            label1.Size = new Size(218, 46);
+            label1.Size = new Size(175, 37);
             label1.TabIndex = 2;
             label1.Text = "Ваши очки!!!";
             label1.Visible = false;
@@ -142,7 +142,7 @@
             label2.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 204);
             label2.Location = new Point(274, 344);
             label2.Name = "label2";
-            label2.Size = new Size(89, 54);
+            label2.Size = new Size(71, 45);
             label2.TabIndex = 3;
             label2.Text = "100";
             label2.Visible = false;
@@ -163,7 +163,7 @@
             label3.AutoSize = true;
             label3.Location = new Point(249, 104);
             label3.Name = "label3";
-            label3.Size = new Size(97, 41);
+            label3.Size = new Size(78, 32);
             label3.TabIndex = 5;
             label3.Text = "label3";
             label3.Click += label3_Click;
@@ -171,11 +171,11 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Xanmono", 24F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            label4.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Regular, GraphicsUnit.Point, 204);
             label4.ForeColor = Color.Red;
-            label4.Location = new Point(123, 183);
+            label4.Location = new Point(207, 182);
             label4.Name = "label4";
-            label4.Size = new Size(417, 40);
+            label4.Size = new Size(183, 37);
             label4.TabIndex = 6;
             label4.Text = "Game over!";
             // 

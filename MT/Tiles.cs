@@ -56,6 +56,10 @@ namespace MT
         public Tile2(int x, int y) : base(x, y)
         {
             _Box.BackColor = Color.Pink;
+            string appFolder = Application.StartupPath;
+            string FilePath = Path.Combine(appFolder, "Star.jpg");
+            //string FilePath = Path.Combine(appFolder, "Black.jpg");
+            _Box.Image = Image.FromFile(FilePath);
         }
         private int ClickCount = 2;
         public override void Click()

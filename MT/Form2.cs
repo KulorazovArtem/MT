@@ -32,7 +32,7 @@ namespace MT
         private System.Windows.Forms.Timer timer;
         private int speed = 100;
 
-        private static int LinesCount = 2;
+        private static int LinesCount = 3;
         //private static int LinesCount = Form.CountTracks;
         private static int TilesCount = (LinesCount * 2 + 4) + (1 + (int)(LinesCount / 5)) + (1 + (int)(LinesCount / 3.5)) + (1);
         //private static int TilesCount = 20;
@@ -48,10 +48,12 @@ namespace MT
         private JSON_SerializerList serializerJ = new JSON_SerializerList();
 
 
-        public Form2(Form1 f)
+        public Form2(int f)
         {
             InitializeComponent();
-            //LinesCount = f.CountTracks;
+            //LinesCount = f;
+            //serializerJ.Serialize("top", f);
+            MessageBox.Show(LinesCount.ToString());
             label3.Text = TotalScore.ToString();
             List<List<int>> sp = new List<List<int>> { };
             int co = 0;
@@ -303,16 +305,25 @@ namespace MT
             timer.Tick += Timer_Tick1;
             speed = 1;
 
+            label1.Visible = false;
+            label2.Visible = false;
+            label4.Visible = false;
+            label3.Location = new Point((int)((this.Size.Width - label3.Size.Width) / 2) - (int)(label3.Size.Width / 2), 50);
+            label3.SendToBack();
+
+
+            timer.Start();
             this.KeyDown += new KeyEventHandler(Key_Down);
             this.KeyUp += new KeyEventHandler(Key_Up);
             this.KeyPreview = true;
+            this.FormClosing += Form_Closing;
         }
 
         private int flag = 0;
         private int timerflag = 0;
 
 
-        private void FormClosing(object sender, FormClosedEventArgs e)
+        private void Form_Closing(object sender, FormClosingEventArgs e)
         {
             serializerJ.Serialize("top", TotalScore);
         }
@@ -361,7 +372,7 @@ namespace MT
                     {
                         if (!Tiles[ii].Clicked && !(Tiles[ii] is TileTrap))
                         {
-                            GameOver();
+                            GameOver(1);
                         }
                         if (Tiles[ii] is TileTrap)
                         {
@@ -375,7 +386,7 @@ namespace MT
                     {
                         if (!Tiles[ii].Clicked)
                         {
-                            GameOver();
+                            GameOver(1);
                         }
                         Lt = (TileLong)Tiles[ii];
                     }
@@ -565,7 +576,7 @@ namespace MT
                         }
                         else if (Tiles[i] is TileTrap)
                         {
-                            GameOver();
+                            GameOver(2);
                         }
                     }
                     else if (Tiles[i].Box.Location.Y >= 100 && Tiles[i].Box.Location.Y < 700 && (Tiles[i] is TileLong))
@@ -579,13 +590,13 @@ namespace MT
             }
             if (Lose == 0)
             {
-                GameOver();
+                GameOver(3);
             }
             label3.Text = TotalScore.ToString();
         }
         private void Key_Up(object sender, KeyEventArgs e)
         {
-            if (LongTileD == true) LongTileD = true;
+            if (LongTileD == true) LongTileD = false;
             //MessageBox.Show("111");
             int X = 0;
             if (e.KeyCode == Keys.A)
@@ -652,7 +663,7 @@ namespace MT
             }
         }
 
-        private void GameOver()
+        private void GameOver(int f)
         {
             timer.Stop();
             for (int i = 0; i < Tiles.Count; i++)
@@ -663,10 +674,29 @@ namespace MT
             {
                 button_all[i].Visible = false;
             }
+            label3.Visible = false;
             label1.Visible = true;
             label2.Visible = true;
+            label2.Text = label3.Text;
             button9.Visible = true;
             this.KeyPreview = false;
+            if (f == 1)
+            {
+                label1.Text = "Missing tile";
+            }
+            else if (f == 2)
+            {
+                label1.Text = "The trap tile";
+            }
+            else
+            {
+                label1.Text = "Incorrect click";
+            }
+            label4.Visible = true;
+            label4.Location = new Point((int)((this.Size.Width - label4.Size.Width)/2), 150);
+            label1.Location = new Point((int)((this.Size.Width - label1.Size.Width)/2), 250);
+            label2.Location = new Point((int)((this.Size.Width - label2.Size.Width)/2), 350);
+            button9.Location = new Point((int)((this.Size.Width - button9.Size.Width)/2), 550);
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -714,6 +744,7 @@ namespace MT
 
         private void button9_Click(object sender, EventArgs e)
         {
+            //serializerJ.Serialize("top", TotalScore);
 
             this.Close();
         }
