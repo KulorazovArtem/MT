@@ -43,6 +43,7 @@
             label1 = new Label();
             label2 = new Label();
             button9 = new Button();
+            label3 = new Label();
             SuspendLayout();
             // 
             // button1
@@ -128,7 +129,7 @@
             label1.Font = new Font("Segoe UI", 28.2F, FontStyle.Regular, GraphicsUnit.Point, 204);
             label1.Location = new Point(180, 253);
             label1.Name = "label1";
-            label1.Size = new Size(300, 62);
+            label1.Size = new Size(242, 51);
             label1.TabIndex = 2;
             label1.Text = "Ваши очки!!!";
             label1.Visible = false;
@@ -140,7 +141,7 @@
             label2.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 204);
             label2.Location = new Point(273, 357);
             label2.Name = "label2";
-            label2.Size = new Size(89, 54);
+            label2.Size = new Size(71, 45);
             label2.TabIndex = 3;
             label2.Text = "100";
             label2.Visible = false;
@@ -156,11 +157,22 @@
             button9.Visible = false;
             button9.Click += button9_Click;
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(249, 104);
+            label3.Name = "label3";
+            label3.Size = new Size(78, 32);
+            label3.TabIndex = 5;
+            label3.Text = "label3";
+            label3.Click += label3_Click;
+            // 
             // Form2
             // 
             AutoScaleMode = AutoScaleMode.None;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(644, 799);
+            Controls.Add(label3);
             Controls.Add(button9);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -193,5 +205,6 @@
         private Label label1;
         private Label label2;
         private Button button9;
+        private Label label3;
     }
 }

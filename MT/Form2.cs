@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.DataFormats;
+//using Form1;
 
 namespace MT
 {
@@ -29,10 +30,10 @@ namespace MT
         private Random random = new Random();
 
         private System.Windows.Forms.Timer timer;
-        private int speed = 2;
+        private int speed = 100;
 
         private static int LinesCount = 8;
-        //private static int LinesCount = CountTracks;
+        //private static int LinesCount = Form.CountTracks;
         private static int TilesCount = (LinesCount * 2 + 4) + (1 + (int)(LinesCount / 5)) + (1 + (int)(LinesCount / 3.5)) + (1);
         //private static int TilesCount = 20;
 
@@ -43,58 +44,84 @@ namespace MT
         private List<Button> button_all = new List<Button>();
         private int[,] matrix = new int[invisiblematrix0 + 2, LinesCount + 2];
 
-        public Form2()
+        public Form2(Form1 f)
         {
             InitializeComponent();
-
+            //LinesCount = f.CountTracks;
             List<List<int>> sp = new List<List<int>> { };
             int co = 0;
-            while (co < TilesCount)
+
+            while (co < TilesCount - 1)
             {
-                if (TilesCount - co > 1)
+                int r1 = random.Next(1 + (5), invisiblematrix0 + 1);
+                int r2 = random.Next(1, LinesCount + 1);
+                if (matrix[r1, r2] == 0 && matrix[r1, r2] == 0 && matrix[r1, r2] == 0)
                 {
-                    int r1 = random.Next(1 + (5), invisiblematrix0 + 1);
-                    int r2 = random.Next(1, LinesCount + 1);
-                    if (matrix[r1, r2] == 0 && matrix[r1, r2] == 0 && matrix[r1, r2] == 0)
-                    {
-                        matrix[r1, r2] = 1;
-                        matrix[r1 - 1, r2] = 2;
-                        matrix[r1 + 1, r2] = 2;
-                        matrix[r1, r2 - 1] = 2;
-                        matrix[r1, r2 + 1] = 2;
-                        co += 1;
-                        //MessageBox.Show(co.ToString());
-                        sp.Add(new List<int> { 80 * (int)((8 - LinesCount) / 2) + (r2 - 1) * 80, (invisiblematrix0 - r1 + 1) * (-100) - 200 });
-                    }
-                }
-                else if (co == TilesCount - 1)
-                {
-                    int r1 = 1;
-                    int r2 = random.Next(1, LinesCount + 1);
-                    if (matrix[r1, r2 + 4] != 2)
-                    {
-                        matrix[r1, r2 - 1] = 2;
-                        matrix[r1, r2] = 1;
-                        matrix[r1, r2 + 1] = 1;
-                        matrix[r1, r2 + 2] = 1;
-                        matrix[r1, r2 + 3] = 1;
-                        matrix[r1, r2 + 4] = 1;
-                        matrix[r1, r2 + 5] = 2;
-                        for (int ii = 0; ii < 5; ii++)
-                        {
-                            for (int j = 0; j < matrix.GetLength(1); j++)
-                            {
-                                if (matrix[ii, j] == 0)
-                                {
-                                    matrix[ii, j] = 2;
-                                }
-                            }
-                        }
-                        co++;
-                        sp.Add(new List<int> { 80 * (int)((8 - LinesCount) / 2) + (r2 - 1) * 80, (invisiblematrix0 - r1 + 1) * (-100) - 200 });
-                    }
+                    matrix[r1, r2] = 1;
+                    matrix[r1 - 1, r2] = 2;
+                    matrix[r1 + 1, r2] = 2;
+                    matrix[r1, r2 - 1] = 2;
+                    matrix[r1, r2 + 1] = 2;
+                    co += 1;
+                    //MessageBox.Show(co.ToString());
+                    sp.Add(new List<int> { 80 * (int)((8 - LinesCount) / 2) + (r2 - 1) * 80, (invisiblematrix0 - r1 + 1) * (-100) - 200 });
                 }
             }
+            //Tiles.Add(new TileLong(sp[i][0], sp[i][1], 5));
+            //this.Controls.Add(Tiles[i].Box);
+
+            //for (int ii = 0; ii < spTiles.Count; ii++)
+            //{
+            //    spTiles[ii].Box.Visible = true;
+            //    spTiles[ii].Box.Location = new Point(sp[ii][0], sp[ii][1]);
+            //}
+
+            //while (co < TilesCount)
+            //{
+            //    if (TilesCount - co > 1)
+            //    {
+            //        int r1 = random.Next(1 + (5), invisiblematrix0 + 1);
+            //        int r2 = random.Next(1, LinesCount + 1);
+            //        if (matrix[r1, r2] == 0 && matrix[r1, r2] == 0 && matrix[r1, r2] == 0)
+            //        {
+            //            matrix[r1, r2] = 1;
+            //            matrix[r1 - 1, r2] = 2;
+            //            matrix[r1 + 1, r2] = 2;
+            //            matrix[r1, r2 - 1] = 2;
+            //            matrix[r1, r2 + 1] = 2;
+            //            co += 1;
+            //            //MessageBox.Show(co.ToString());
+            //            sp.Add(new List<int> { 80 * (int)((8 - LinesCount) / 2) + (r2 - 1) * 80, (invisiblematrix0 - r1 + 1) * (-100) - 200 });
+            //        }
+            //    }
+            //    else if (co == TilesCount - 1)
+            //    {
+            //        int r1 = 1;
+            //        int r2 = random.Next(1, LinesCount + 1);
+            //        if (matrix[r1, r2 + 4] != 2)
+            //        {
+            //            matrix[r1 - 1, r2] = 2;
+            //            matrix[r1, r2] = 1;
+            //            matrix[r1, r2 + 1] = 1;
+            //            matrix[r1, r2 + 2] = 1;
+            //            matrix[r1, r2 + 3] = 1;
+            //            matrix[r1, r2 + 4] = 1;
+            //            matrix[r1, r2 + 5] = 2;
+            //            for (int ii = 0; ii < 5; ii++)
+            //            {
+            //                for (int j = 0; j < matrix.GetLength(1); j++)
+            //                {
+            //                    if (matrix[ii, j] == 0)
+            //                    {
+            //                        matrix[ii, j] = 2;
+            //                    }
+            //                }
+            //            }
+            //            co++;
+            //            sp.Add(new List<int> { 80 * (int)((8 - LinesCount) / 2) + (r2 - 1) * 80, (invisiblematrix0 - r1 + 1) * (-100) - 200 });
+            //        }
+            //    }
+            //}
             int i = 0;
             for (int j = 0; j < LinesCount * 2 + 4; i++, j++)
             {
@@ -111,8 +138,39 @@ namespace MT
                 Tiles.Add(new TileTrap(sp[i][0], sp[i][1]));
                 this.Controls.Add(Tiles[i].Box);
             }
-            Tiles.Add(new TileLong(sp[i][0], sp[i][1], 5));
-            this.Controls.Add(Tiles[i].Box);
+
+            if (true)
+            {
+                while (true)
+                {
+                    int r1 = 1;
+                    int r2 = random.Next(1, LinesCount + 1);
+                    if (matrix[r1 + 4, r2] != 2)
+                    {
+                        matrix[r1 - 1, r2] = 2;
+                        matrix[r1, r2] = 1;
+                        matrix[r1 + 1, r2] = 1;
+                        matrix[r1 + 2, r2] = 1;
+                        matrix[r1 + 3, r2] = 1;
+                        matrix[r1 + 4, r2] = 1;
+                        matrix[r1 + 5, r2] = 2;
+                        for (int ii = 1; ii <= 5; ii++)
+                        {
+                            for (int j = 0; j < matrix.GetLength(1); j++)
+                            {
+                                if (matrix[ii, j] == 0)
+                                {
+                                    matrix[ii, j] = 2;
+                                }
+                            }
+                        }
+                        TileLong Lt = new TileLong((80 * (int)((8 - LinesCount) / 2) + (r2 - 1) * 80), (invisiblematrix0 - r1 + 1) * (-100) - 200, 5);
+                        Tiles.Add(Lt);
+                        this.Controls.Add(Lt.Box);
+                        break;
+                    }
+                }
+            }
 
             //pictureBox1 = new PictureBox
             //{
@@ -238,15 +296,17 @@ namespace MT
             timer = new System.Windows.Forms.Timer();
             timer.Interval = 10; // Интервал в миллисекундах (20 раз в секунду)
             timer.Tick += Timer_Tick1;
+            speed = 1;
 
             this.KeyDown += new KeyEventHandler(Key_Down);
             this.KeyPreview = true;
         }
 
         private int flag = 0;
+        private int timerflag = 0;
         private void Timer_Tick1(object sender, EventArgs e)
         {
-
+            label3.Text = $"{timer.Interval}\n{speed}";
             flag += 1;
             for (int i = 0; i < Tiles.Count; i++)
             {
@@ -256,9 +316,25 @@ namespace MT
             //if (pictureBoxes[0].Location.Y % 100 == 0)
             //    MessageBox.Show(pictureBoxes[0].Location.Y.ToString());
             // Остановка при достижении нижней границы формы
-
-            if (flag == 100 / speed)
+            if (flag >= 100 / speed)
             {
+                timerflag += 1;
+                if (timerflag >= 20)
+                {
+                    timerflag = 0;
+                    //timer.Interval = Math.Max(1, timer.Interval - 1);
+                    speed = Math.Min(10, speed + 1);
+                }
+                //timerflag += 1;
+                //if (timerflag % 3 == 0)
+                //{
+                //    timerflag = 0;
+                //    timer.Interval = Math.Max(timer.Interval - 5, 1);
+                //}
+                //if (timerflag % 2 == 0)
+                //{
+                //    speed = Math.Min(10, speed + 1);
+                //}
                 //MessageBox.Show(pictureBoxes[0].Location.Y.ToString());
                 //label1.Text = pictureBoxes[0].Location.Y.ToString();
                 //label2.Text = flag.ToString();
@@ -266,16 +342,17 @@ namespace MT
                 int co = 0;
                 int l = 0;
                 List<Tile> spTiles = new List<Tile>();
+                Tile Lt = null;
                 for (int ii = 0; ii < Tiles.Count; ii++)
                 {
-                    if (Tiles[ii].Box.Location.Y == 800)
+                    if (Tiles[ii].Box.Location.Y >= 800 && !(Tiles[ii] is TileLong))
                     {
                         spTiles.Add(Tiles[ii]);
                         co += 1;
-                        if (Tiles[ii].Box.Size.Height == 5 * 100)
-                        {
-                            l += 1;
-                        }
+                    }
+                    if (Tiles[ii] is TileLong && Tiles[ii].Box.Location.Y >= 800)
+                    {
+                        Lt = (TileLong)Tiles[ii];
                     }
                 }
 
@@ -301,36 +378,36 @@ namespace MT
                 int coco = 0;
                 while (coco < co)
                 {
-                    if (TilesCount - coco > 1)
+                    int r1 = random.Next(1 + (5), invisiblematrix0 + 1);
+                    int r2 = random.Next(1, LinesCount + 1);
+                    if (matrix[r1, r2] == 0 && matrix[r1, r2] == 0 && matrix[r1, r2] == 0)
                     {
-                        int r1 = random.Next(1 + (5), invisiblematrix0 + 1);
-                        int r2 = random.Next(1, LinesCount + 1);
-                        if (matrix[r1, r2] == 0 && matrix[r1, r2] == 0 && matrix[r1, r2] == 0)
-                        {
-                            matrix[r1, r2] = 1;
-                            matrix[r1 - 1, r2] = 2;
-                            matrix[r1 + 1, r2] = 2;
-                            matrix[r1, r2 - 1] = 2;
-                            matrix[r1, r2 + 1] = 2;
-                            coco += 1;
-                            //MessageBox.Show(co.ToString());
-                            sp.Add(new List<int> { 80 * (int)((8 - LinesCount) / 2) + (r2 - 1) * 80, (invisiblematrix0 - r1 + 1) * (-100) - 200 });
-                        }
+                        matrix[r1, r2] = 1;
+                        matrix[r1 - 1, r2] = 2;
+                        matrix[r1 + 1, r2] = 2;
+                        matrix[r1, r2 - 1] = 2;
+                        matrix[r1, r2 + 1] = 2;
+                        coco += 1;
+                        //MessageBox.Show(co.ToString());
+                        sp.Add(new List<int> { 80 * (int)((8 - LinesCount) / 2) + (r2 - 1) * 80, (invisiblematrix0 - r1 + 1) * (-100) - 200 });
                     }
-                    else if (coco == TilesCount - 1 && l >= 1)
+                }
+                if (Lt != null)
+                {
+                    while (true)
                     {
                         int r1 = 1;
                         int r2 = random.Next(1, LinesCount + 1);
-                        if (matrix[r1, r2 + 4] != 2)
+                        if (matrix[r1 + 4, r2] != 2)
                         {
-                            matrix[r1, r2 - 1] = 2;
+                            matrix[r1 - 1, r2] = 2;
                             matrix[r1, r2] = 1;
-                            matrix[r1, r2 + 1] = 1;
-                            matrix[r1, r2 + 2] = 1;
-                            matrix[r1, r2 + 3] = 1;
-                            matrix[r1, r2 + 4] = 1;
-                            matrix[r1, r2 + 5] = 2;
-                            for (int ii = 0; ii < 5; ii++)
+                            matrix[r1 + 1, r2] = 1;
+                            matrix[r1 + 2, r2] = 1;
+                            matrix[r1 + 3, r2] = 1;
+                            matrix[r1 + 4, r2] = 1;
+                            matrix[r1 + 5, r2] = 2;
+                            for (int ii = 1; ii <= 5; ii++)
                             {
                                 for (int j = 0; j < matrix.GetLength(1); j++)
                                 {
@@ -340,51 +417,47 @@ namespace MT
                                     }
                                 }
                             }
-                            coco++;
-                            sp.Add(new List<int> { 80 * (int)((8 - LinesCount) / 2) + (r2 - 1) * 80, (invisiblematrix0 - r1 + 1) * (-100) - 200 });
+                            Lt.Box.Visible = true;
+                            Lt.Box.Location = new Point(80 * (int)((8 - LinesCount) / 2) + (r2 - 1) * 80, (invisiblematrix0 - r1 + 1) * (-100) - 200);
+                            break;
                         }
                     }
                 }
-                for (int ii = 0, j = 0; ii < spTiles.Count; ii++, j++)
+
+                for (int ii = 0; ii < spTiles.Count; ii++)
                 {
-                    if (spTiles[ii] is TileLong)
-                    {
-                        spTiles[ii].Box.Location = new Point(sp[spTiles.Count - 1][0], sp[spTiles.Count - 1][1]);
-                    }
-                    else
-                    {
-                        spTiles[ii].Box.Location = new Point(sp[j][0], sp[][1]);
-                    }
+                    spTiles[ii].Box.Visible = true;
+                    spTiles[ii].Box.Location = new Point(sp[ii][0], sp[ii][1]);
                 }
-                //int i = 0;
-                //for (int j = 0; j < LinesCount * 2 + 4; i++, j++)
-                //{
-                //    Tiles.Add(new Tile(sp[i][0], sp[i][1]));
-                //    this.Controls.Add(Tiles[i].Box);
-                //}
-                //for (int j = 0; j < 1 + (int)(LinesCount / 5); j++, i++)
-                //{
-                //    Tiles.Add(new Tile2(sp[i][0], sp[i][1]));
-                //    this.Controls.Add(Tiles[i].Box);
-                //}
-                //for (int j = 0; j < 1 + (int)(LinesCount / 3.5); j++, i++)
-                //{
-                //    Tiles.Add(new TileTrap(sp[i][0], sp[i][1]));
-                //    this.Controls.Add(Tiles[i].Box);
-                //}
-                //Tiles.Add(new TileLong(sp[i][0], sp[i][1], 5));
-                //this.Controls.Add(Tiles[i].Box);
-                ////MessageBox.Show("1");
-                //for (int i = 0, k = 0; i < Tiles.Count; i++)
-                //{
-                //    if (Tiles[i].Box.Location.Y == 800)
-                //    {
-                //        Tiles[i].Box.Visible = true;
-                //        Tiles[i].Box.Location = new Point(sp[k][0], sp[k][1]);
-                //        k++;
-                //    }
-                //}
             }
+            //int i = 0;
+            //for (int j = 0; j < LinesCount * 2 + 4; i++, j++)
+            //{
+            //    Tiles.Add(new Tile(sp[i][0], sp[i][1]));
+            //    this.Controls.Add(Tiles[i].Box);
+            //}
+            //for (int j = 0; j < 1 + (int)(LinesCount / 5); j++, i++)
+            //{
+            //    Tiles.Add(new Tile2(sp[i][0], sp[i][1]));
+            //    this.Controls.Add(Tiles[i].Box);
+            //}
+            //for (int j = 0; j < 1 + (int)(LinesCount / 3.5); j++, i++)
+            //{
+            //    Tiles.Add(new TileTrap(sp[i][0], sp[i][1]));
+            //    this.Controls.Add(Tiles[i].Box);
+            //}
+            //Tiles.Add(new TileLong(sp[i][0], sp[i][1], 5));
+            //this.Controls.Add(Tiles[i].Box);
+            ////MessageBox.Show("1");
+            //for (int i = 0, k = 0; i < Tiles.Count; i++)
+            //{
+            //    if (Tiles[i].Box.Location.Y == 800)
+            //    {
+            //        Tiles[i].Box.Visible = true;
+            //        Tiles[i].Box.Location = new Point(sp[k][0], sp[k][1]);
+            //        k++;
+            //    }
+            //}
         }
 
         private void Click(PictureBox P)
@@ -502,8 +575,13 @@ namespace MT
 
         private void button9_Click(object sender, EventArgs e)
         {
-            
+
             this.Close();
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
