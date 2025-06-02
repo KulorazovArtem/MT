@@ -108,7 +108,9 @@ namespace MT
             SelectFile($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
             var text = File.ReadAllText(FilePath);
             var top = JsonConvert.DeserializeObject<Top>(text);
-            
+
+
+
             int[] top_top = top.Top_10;
             return top_top;
         }
