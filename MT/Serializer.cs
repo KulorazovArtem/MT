@@ -76,9 +76,22 @@ namespace MT
                 }
             }
             new_top = new_top.Take(10).ToArray();
+            var json = new JSON_SerializerList();
+            json.Serialize(new_top);
             Top top = new Top(new_top);
             XmlSerializer xml_ser = new XmlSerializer(typeof(Top));
             using (StreamWriter writ = new StreamWriter(FilePath)) 
+            {
+                xml_ser.Serialize(writ, top);
+            }
+        }
+        public void Serializer_top_10(int[] top_10)
+        {
+            SelectFile($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
+            
+            Top top = new Top(top_10);
+            XmlSerializer xml_ser = new XmlSerializer(typeof(Top));
+            using (StreamWriter writ = new StreamWriter(FilePath))
             {
                 xml_ser.Serialize(writ, top);
             }
@@ -136,6 +149,8 @@ namespace MT
                 }
             }
             new_top = new_top.Take(10).ToArray();
+            var xml = new XML_SerializerList();
+            xml.Serializer_top_10(new_top);
             Top top = new Top
             {
                 Top_10 = new_top
@@ -145,9 +160,23 @@ namespace MT
 
             File.WriteAllText(FilePath, js);
         }
+        public void Serialize(int[] top_10)
+        {
+            SelectFile($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
+            
+            Top top = new Top
+            {
+                Top_10 = top_10
+
+            };
+            string js = System.Text.Json.JsonSerializer.Serialize(top);
+
+            File.WriteAllText(FilePath, js);
+        }
         private class Top
         {
             public int[] Top_10 { get; set; }
+            public int Top_1 { get; set; }
         }
 
     }

@@ -38,17 +38,19 @@ namespace MT
             {
                 if (selectedText == "JSON")
                 {
-                    var rr = new JSON_SerializerList();
-                    //rr.Serialize("top", yy);
-                    text = rr.Deserialize();
-                    
+                    var xml = new XML_SerializerList();
+                    var json = new JSON_SerializerList();
+
+                    text = xml.Deserialize();
+                    json.Serialize(text);
 
                 }
                 else // XML
                 {
-                    var rr = new XML_SerializerList();
-                    //rr.Serializer_top_10("top", yy);
-                    text = rr.Deserialize();
+                    var xml = new XML_SerializerList();
+                    var json = new JSON_SerializerList();
+                    text = json.Deserialize();
+                    xml.Serializer_top_10(text);
                 }
             }
             if (File.Exists(name_file) == false || text == null)
