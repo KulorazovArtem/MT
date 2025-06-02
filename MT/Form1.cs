@@ -1,5 +1,6 @@
 using System.Net.WebSockets;
 using System.Xml.Linq;
+using Model;
 
 namespace MT
 {

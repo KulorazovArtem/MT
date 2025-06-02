@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.DataFormats;
+using Model;
 //using Form1;
 
 namespace MT
@@ -196,8 +197,9 @@ namespace MT
 
                 flag = 0;
 
-                TileWork workk = new TileWork(LinesCount, this, matrix);
+                TileWork workk = new TileWork(LinesCount, this, matrix, Tiles);
                 matrix = workk.Rmatrix;
+                Tiles = workk.RTiles;
 
             }
         }

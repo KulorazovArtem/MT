@@ -342,9 +342,10 @@ namespace MT
     }
     public partial class TileWork
     {
-        public TileWork(int LinesCount, Form2 form, int[,] mmatrix)
+        public TileWork(int LinesCount, Form2 form, int[,] mmatrix, List<Tile> Tilee)
         {
             matrix = mmatrix;
+            Tiles = Tilee;
             int invisiblematrix0 = matrix.GetLength(0) - 2;
             int co = 0;
             int l = 0;
