@@ -11,7 +11,13 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace MT
 {
-    public abstract class Serializer
+    public interface ISerializer
+    {
+        string FolderPath { get; }
+        string FilePath { get; }
+        void SelectFile(string name);
+    }
+    public abstract class Serializer : ISerializer
     {
         public string FolderPath { get; private set; }
         public string FilePath { get; private set; }
@@ -37,9 +43,9 @@ namespace MT
                 return "xml";
             }
         }
-        public int[] Deserialize(string fileName)
+        public int[] Deserialize( )
         {
-            SelectFile(fileName);
+            SelectFile($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
             XmlSerializer top_10 = new XmlSerializer(typeof(Top));
             Top top;
             using (StreamReader writer = new StreamReader(FilePath)) 
@@ -49,10 +55,10 @@ namespace MT
             int[] top_top = top.Top_10;
             return top_top;
         }
-        public void Serializer_top_10(string fileName, int top_1)
+        public void Serializer_top_10(int top_1)
         {
-            SelectFile(fileName);
-            int[] text = Deserialize(fileName);
+            SelectFile($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
+            int[] text = Deserialize();
             Array.Resize(ref text, text.Length + 1);
             text[text.Length - 1] = top_1;
             int[] new_top = text;
@@ -96,20 +102,21 @@ namespace MT
                 return "json";
             }
         }
-        public int[] Deserialize(string fileName)
+        public int[] Deserialize()
         {
 
-            SelectFile(fileName);
+            SelectFile($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
             var text = File.ReadAllText(FilePath);
             var top = JsonConvert.DeserializeObject<Top>(text);
+            if(top == null) return new int[0];
             int[] top_top = top.Top_10;
             return top_top;
         }
         
-        public void Serialize(string fileName, int top_1)
+        public void Serialize(int top_1)
         {
-            SelectFile(fileName);
-            int[] text = Deserialize($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
+            SelectFile($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
+            int[] text = Deserialize();
             Array.Resize(ref text, text.Length + 1);
             text[text.Length - 1] = top_1;
             int[] new_top = text;

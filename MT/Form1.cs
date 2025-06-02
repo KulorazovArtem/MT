@@ -33,22 +33,22 @@ namespace MT
             string selectedText = comboBox1.SelectedItem.ToString();
            
             var name_file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"top.{comboBox1.SelectedItem.ToString()}");
-            int yy = 94;
+            
             if (File.Exists(name_file) == true)
             {
                 if (selectedText == "JSON")
                 {
                     var rr = new JSON_SerializerList();
-                    rr.Serialize("top", yy);
-                    text = rr.Deserialize($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
+                    //rr.Serialize("top", yy);
+                    text = rr.Deserialize();
                     
 
                 }
                 else // XML
                 {
                     var rr = new XML_SerializerList();
-                    rr.Serializer_top_10("top", yy);
-                    text = rr.Deserialize($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
+                    //rr.Serializer_top_10("top", yy);
+                    text = rr.Deserialize();
                 }
             }
             if (File.Exists(name_file) == false || text == null)

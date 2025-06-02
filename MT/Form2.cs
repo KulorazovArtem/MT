@@ -314,7 +314,7 @@ namespace MT
 
         private void FormClosing(object sender, FormClosedEventArgs e)
         {
-            serializerJ.Serialize("top", TotalScore);
+            serializerJ.Serialize(TotalScore);
         }
         private void Timer_Tick1(object sender, EventArgs e)
         {
