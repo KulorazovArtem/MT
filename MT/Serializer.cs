@@ -11,11 +11,12 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace MT
 {
+    delegate string MathOperation(string fileName);
     public interface ISerializer
     {
         string FolderPath { get; }
         string FilePath { get; }
-        void SelectFile(string name);
+        string SelectFile(string name);
     }
     public abstract class Serializer : ISerializer
     {
@@ -23,7 +24,7 @@ namespace MT
         public string FilePath { get; private set; }
         public abstract string Extension { get; }
        
-        public void SelectFile(string name)
+        public string SelectFile(string name)
         {
             var name_file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"{name}.{Extension}");
             if (File.Exists(name_file) == false)
@@ -31,6 +32,7 @@ namespace MT
                 File.Create(name_file).Close();
             }
             FilePath = name_file;
+            return FilePath;
         }
     }
 
@@ -43,9 +45,10 @@ namespace MT
                 return "xml";
             }
         }
-        public int[] Deserialize( )
+        public int[] Deserialize()
         {
-            SelectFile($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
+            MathOperation operation = SelectFile;
+            string FilePath = operation($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
             XmlSerializer top_10 = new XmlSerializer(typeof(Top));
             Top top;
             using (StreamReader writer = new StreamReader(FilePath)) 
@@ -57,7 +60,8 @@ namespace MT
         }
         public void Serializer_top_10(int top_1)
         {
-            SelectFile($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
+            MathOperation operation = SelectFile;
+            string FilePath = operation($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
             int[] text = Deserialize();
             Array.Resize(ref text, text.Length + 1);
             text[text.Length - 1] = top_1;
@@ -87,8 +91,8 @@ namespace MT
         }
         public void Serializer_top_10(int[] top_10)
         {
-            SelectFile($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
-            
+            MathOperation operation = SelectFile;
+            string FilePath = operation($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
             Top top = new Top(top_10);
             XmlSerializer xml_ser = new XmlSerializer(typeof(Top));
             using (StreamWriter writ = new StreamWriter(FilePath))
@@ -117,8 +121,8 @@ namespace MT
         }
         public int[] Deserialize()
         {
-
-            SelectFile($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
+            MathOperation operation = SelectFile;
+            string FilePath = operation($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
             var text = File.ReadAllText(FilePath);
             var top = JsonConvert.DeserializeObject<Top>(text);
 
@@ -130,7 +134,8 @@ namespace MT
         
         public void Serialize(int top_1)
         {
-            SelectFile($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
+            MathOperation operation = SelectFile;
+            string FilePath = operation($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top"); 
             int[] text = Deserialize();
             Array.Resize(ref text, text.Length + 1);
             text[text.Length - 1] = top_1;
@@ -162,8 +167,8 @@ namespace MT
         }
         public void Serialize(int[] top_10)
         {
-            SelectFile($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
-            
+            MathOperation operation = SelectFile;
+            string FilePath = operation($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/top");
             Top top = new Top
             {
                 Top_10 = top_10
