@@ -109,4 +109,5 @@ namespace MT
             _Box.Visible = false;
         }
     }
+    public partial TileWork
 }

@@ -102,7 +102,6 @@ namespace MT
             SelectFile(fileName);
             var text = File.ReadAllText(FilePath);
             var top = JsonConvert.DeserializeObject<Top>(text);
-            if (top == null) return new int[0];
             int[] top_top = top.Top_10;
             return top_top;
         }
