@@ -13,7 +13,6 @@ using System.Windows.Forms;
 using static System.Windows.Forms.DataFormats;
 using Model;
 //using Form1;
-using Model;
 
 namespace MT
 {
@@ -63,7 +62,7 @@ namespace MT
             List<List<int>> sp = new List<List<int>> { };
 
 
-            TileWork Work = new TileWork(matrix, LinesCount, this);
+            WorkT.TileWork Work = new WorkT.TileWork(matrix, LinesCount, this);
             matrix = Work.Rmatrix;
             sp = Work.Rsp;
             Tiles = Work.RTiles;
@@ -198,10 +197,10 @@ namespace MT
 
                 flag = 0;
 
-                TileWork workk = new TileWork(LinesCount, this, matrix, Tiles);
+                WorkT.TileWork workk = new WorkT.TileWork(LinesCount, this, matrix, Tiles);
                 matrix = workk.Rmatrix;
                 Tiles = workk.RTiles;
-
+                TotalScore += workk.RTotalScore;
 
             }
         }
@@ -212,7 +211,7 @@ namespace MT
         private void Key_Down(object sender, KeyEventArgs e)
         {
             if (LongTileD) return;
-            TileWork Work = new TileWork(e);
+            WorkT.TileWork Work = new WorkT.TileWork(e);
             //MessageBox.Show("111");
             int X = Work.X;
             //int X = 0;
@@ -259,7 +258,7 @@ namespace MT
             //X *= 80;
 
 
-            TileWork Workk = new TileWork(Tiles, LinesCount, this, X, 0);
+            WorkT.TileWork Workk = new WorkT.TileWork(Tiles, LinesCount, this, X, 0);
             LongTileDown = Workk.RLongTileDown;
             LongTileD = Workk.RLongTileD;
             TotalScore += Workk.RTotalScore;
@@ -313,7 +312,7 @@ namespace MT
         {
             if (LongTileD == true) LongTileD = false;
             if (LongTileD) return;
-            TileWork Work = new TileWork(e);
+            WorkT.TileWork Work = new WorkT.TileWork(e);
             //MessageBox.Show("111");
             int X = Work.X;
             //MessageBox.Show("111");
@@ -352,7 +351,7 @@ namespace MT
             //}
             //X *= 80;
 
-            TileWork Workk = new TileWork(Tiles, LinesCount, this, X, 1);
+            WorkT.TileWork Workk = new WorkT.TileWork(Tiles, LinesCount, this, X, 1);
             LongTileDown = Workk.RLongTileDown;
             LongTileD = Workk.RLongTileD;
             TotalScore += Workk.RTotalScore;
