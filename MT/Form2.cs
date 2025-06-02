@@ -169,7 +169,7 @@ namespace MT
 
         private void Form_Closing(object sender, FormClosingEventArgs e)
         {
-            serializerJ.Serialize("top", TotalScore);
+            serializerJ.Serialize(TotalScore);
         }
         private void Timer_Tick1(object sender, EventArgs e)
         {
