@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace MT
 {
-    public class Tile
+    public interface MusTile
+    {
+        bool Clicked { get; }
+        void Click() { }
+        void NotClicked() { }
+    }
+    public abstract class Tile : MusTile
     {
         protected PictureBox _Box;
         protected bool _Сlicked = false;
@@ -24,7 +30,7 @@ namespace MT
         }
         public PictureBox Box { get { return _Box; } }
         public virtual void Click() { }
-        public void NotClicked() 
+        public virtual void NotClicked() 
         {
             _Сlicked = false;
         }
@@ -56,6 +62,10 @@ namespace MT
         public Tile2(int x, int y) : base(x, y)
         {
             _Box.BackColor = Color.Pink;
+            string appFolder = Application.StartupPath;
+            string FilePath = Path.Combine(appFolder, "Star.jpg");
+            //string FilePath = Path.Combine(appFolder, "Black.jpg");
+            _Box.Image = Image.FromFile(FilePath);
         }
         private int ClickCount = 2;
         public override void Click()
@@ -67,6 +77,11 @@ namespace MT
                 _Сlicked = true;
                 _Box.Visible = false;
             }
+        }
+        public override void NotClicked()
+        {
+            _Сlicked = false;
+            ClickCount = 2;
         }
     }
     public class TileTrap : Tile
@@ -94,4 +109,5 @@ namespace MT
             _Box.Visible = false;
         }
     }
+    public partial TileWork
 }

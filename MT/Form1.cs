@@ -119,7 +119,7 @@ namespace MT
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form2 form2 = new Form2(this);
+            Form2 form2 = new Form2(count_tracks);
             form2.Show();
         }
 
