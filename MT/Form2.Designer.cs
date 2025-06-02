@@ -45,6 +45,8 @@
             button9 = new Button();
             label3 = new Label();
             label4 = new Label();
+            pictureBox1 = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // button1
@@ -179,11 +181,20 @@
             label4.TabIndex = 6;
             label4.Text = "Game over!";
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(131, 481);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(231, 76);
+            pictureBox1.TabIndex = 7;
+            pictureBox1.TabStop = false;
+            // 
             // Form2
             // 
             AutoScaleMode = AutoScaleMode.None;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(644, 799);
+            Controls.Add(pictureBox1);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(button9);
@@ -201,6 +212,7 @@
             Name = "Form2";
             Text = "Form2";
             Load += Form2_Load;
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -220,5 +232,6 @@
         private Button button9;
         private Label label3;
         private Label label4;
+        private PictureBox pictureBox1;
     }
 }

@@ -28,13 +28,12 @@ namespace MT
 
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        public void WText()
         {
-
             string selectedText = comboBox1.SelectedItem.ToString();
-           
+
             var name_file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"top.{comboBox1.SelectedItem.ToString()}");
-            
+
             if (File.Exists(name_file) == true)
             {
                 if (selectedText == "JSON")
@@ -77,9 +76,10 @@ namespace MT
                     tableLayoutPanel1.Controls.Add(cellLabel, 0, i);
                 }
             }
-
-
-
+        }
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            WText();            
         }
         public void SelectFolder(string path)
         {
@@ -122,7 +122,7 @@ namespace MT
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form2 form2 = new Form2(count_tracks);
+            Form2 form2 = new Form2(this);
             form2.Show();
         }
 

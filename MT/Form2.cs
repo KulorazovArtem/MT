@@ -46,19 +46,27 @@ namespace MT
         private List<Button> button_all = new List<Button>();
         private int[,] matrix = new int[invisiblematrix0 + 2, LinesCount + 2];
         private int TotalScore = 0;
+        private Form1 form;
 
         private JSON_SerializerList serializerJ = new JSON_SerializerList();
 
 
-        public Form2(int f)
+        public Form2(Form1 ff)
         {
             InitializeComponent();
-            LinesCount = f;
+            form = ff;
+            LinesCount = form.CountTracks;
+
             
             matrix = new int[invisiblematrix0 + 2, LinesCount + 2];
             //serializerJ.Serialize("top", f);
             //MessageBox.Show(LinesCount.ToString());
             label3.Text = TotalScore.ToString();
+            pictureBox1.Height = 1;
+            pictureBox1.Width = this.Width;
+            pictureBox1.Location = new Point(0, 600);
+            pictureBox1.BackColor = Color.Black;
+            pictureBox1.SendToBack();
             List<List<int>> sp = new List<List<int>> { };
 
 
@@ -165,12 +173,13 @@ namespace MT
         }
 
         private int flag = 0;
-        private int timerflag = -10;
+        private int timerflag = -5;
 
 
         private void Form_Closing(object sender, FormClosingEventArgs e)
         {
             serializerJ.Serialize(TotalScore);
+            form.WText();
         }
         private void Timer_Tick1(object sender, EventArgs e)
         {
@@ -416,10 +425,12 @@ namespace MT
                 label1.Text = "Incorrect click";
             }
             label4.Visible = true;
+            pictureBox1.Visible = false;
             label4.Location = new Point((int)((this.Size.Width - label4.Size.Width)/2), 150);
             label1.Location = new Point((int)((this.Size.Width - label1.Size.Width)/2), 250);
             label2.Location = new Point((int)((this.Size.Width - label2.Size.Width)/2), 350);
             button9.Location = new Point((int)((this.Size.Width - button9.Size.Width)/2), 550);
+            form.WText();
         }
 
         private void Form2_Load(object sender, EventArgs e)
