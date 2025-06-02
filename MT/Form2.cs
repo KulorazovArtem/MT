@@ -51,7 +51,9 @@ namespace MT
         public Form2(int f)
         {
             InitializeComponent();
-            //LinesCount = f;
+            LinesCount = f;
+            TilesCount = (LinesCount * 2 + 4) + (1 + (int)(LinesCount / 5)) + (1 + (int)(LinesCount / 3.5)) + (1);
+            matrix = new int[invisiblematrix0 + 2, LinesCount + 2];
             //serializerJ.Serialize("top", f);
             MessageBox.Show(LinesCount.ToString());
             label3.Text = TotalScore.ToString();
@@ -308,7 +310,7 @@ namespace MT
             label1.Visible = false;
             label2.Visible = false;
             label4.Visible = false;
-            label3.Location = new Point((int)((this.Size.Width - label3.Size.Width) / 2) - (int)(label3.Size.Width / 2), 50);
+            label3.Location = new Point((int)((this.Size.Width - label3.Size.Width) / 2) - (int)(label3.Size.Width), 50);
             label3.SendToBack();
 
 
@@ -342,7 +344,7 @@ namespace MT
             if (flag >= 100 / speed)
             {
                 timerflag += 1;
-                if (timerflag >= 20)
+                if (timerflag >= 26)
                 {
                     timerflag = 0;
                     //timer.Interval = Math.Max(1, timer.Interval - 1);
